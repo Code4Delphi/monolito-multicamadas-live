@@ -12,11 +12,8 @@ object ConexaoDM: TConexaoDM
   end
   object FDConnection1: TFDConnection
     Params.Strings = (
-      
-        'Database=C:\Code4D\Palestras\De-frente-com-a-Mel\Samples\DB\dado' +
-        's.db'
+      'Database=C:\Lives\monolito-multicamadas-live\Samples\DB\dados.db'
       'DriverID=SQLite')
-    Connected = True
     LoginPrompt = False
     Left = 136
     Top = 56

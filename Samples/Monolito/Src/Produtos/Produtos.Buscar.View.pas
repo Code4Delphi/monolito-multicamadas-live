@@ -43,8 +43,11 @@ type
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure btnFecharClick(Sender: TObject);
     procedure btnCadastrarClick(Sender: TObject);
+    procedure DBGrid1KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure btnAlterarClick(Sender: TObject);
   private
-    procedure BuscarDados;
+    procedure ListarDados;
+    procedure ChamarTelaCadastrar(const AId: Integer = 0);
 
   public
 
@@ -88,7 +91,7 @@ end;
 
 procedure TProdutosBuscarView.edtBuscarChange(Sender: TObject);
 begin
-  Self.BuscarDados;
+  Self.ListarDados;
 end;
 
 procedure TProdutosBuscarView.btnFecharClick(Sender: TObject);
@@ -96,7 +99,7 @@ begin
   Self.Close;
 end;
 
-procedure TProdutosBuscarView.BuscarDados;
+procedure TProdutosBuscarView.ListarDados;
 var
   LStrBuscar: string;
   LCondicao: string;
@@ -119,11 +122,35 @@ begin
   lbTotal.Caption := FormatFloat('000000', DataSource1.DataSet.RecordCount);
 end;
 
+procedure TProdutosBuscarView.DBGrid1KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+  if (ssCtrl in Shift) and (Key = VK_DELETE) then
+    Key := 0;
+end;
+
 procedure TProdutosBuscarView.btnCadastrarClick(Sender: TObject);
+begin
+  Self.ChamarTelaCadastrar;
+end;
+
+procedure TProdutosBuscarView.btnAlterarClick(Sender: TObject);
+begin
+  if ProdutosDm.QListar.IsEmpty then
+    raise Exception.Create('Selecione um registro para continuar');
+
+  Self.ChamarTelaCadastrar(ProdutosDm.QListarId.AsInteger);
+end;
+
+procedure TProdutosBuscarView.ChamarTelaCadastrar(const AId: Integer = 0);
 begin
   var LView := TProdutosCadastrarView.Create(nil);
   try
-    LView.ShowModal;
+    LView.IdAlterar := AId;
+    if LView.ShowModal <> mrOk then
+      Exit;
+
+    Self.ListarDados;
+    ProdutosDm.QListar.Locate('id', LView.IdSelecionado, [loCaseInsensitive]);
   finally
     LView.Free;
   end;

@@ -26,8 +26,6 @@ object ProdutosBuscarView: TProdutosBuscarView
     BevelKind = bkTile
     BevelOuter = bvNone
     TabOrder = 0
-    ExplicitLeft = 1
-    ExplicitTop = -6
     DesignSize = (
       961
       71)
@@ -281,6 +279,7 @@ object ProdutosBuscarView: TProdutosBuscarView
         78070404DBF6EEF4F1FD54545454545454545454545454380704040404F9EFF5
         FA040404040404040404040404040404040404040404F8FC0404}
       TabOrder = 3
+      OnClick = btnAlterarClick
     end
   end
   object pnTotal: TPanel
@@ -290,8 +289,6 @@ object ProdutosBuscarView: TProdutosBuscarView
     Height = 21
     Align = alBottom
     TabOrder = 2
-    ExplicitLeft = 1
-    ExplicitTop = 563
     object lbTotal: TLabel
       AlignWithMargins = True
       Left = 918
@@ -305,7 +302,6 @@ object ProdutosBuscarView: TProdutosBuscarView
       Align = alRight
       Caption = '000000'
       Layout = tlCenter
-      ExplicitLeft = 803
       ExplicitHeight = 15
     end
     object Label2: TLabel
@@ -321,7 +317,6 @@ object ProdutosBuscarView: TProdutosBuscarView
       Align = alRight
       Caption = 'Registros localizados:  '
       Layout = tlCenter
-      ExplicitLeft = 803
       ExplicitHeight = 15
     end
   end
@@ -353,6 +348,7 @@ object ProdutosBuscarView: TProdutosBuscarView
       TitleFont.Height = -11
       TitleFont.Name = 'Tahoma'
       TitleFont.Style = [fsBold]
+      OnKeyDown = DBGrid1KeyDown
       Columns = <
         item
           Alignment = taCenter
@@ -361,6 +357,14 @@ object ProdutosBuscarView: TProdutosBuscarView
           Title.Alignment = taCenter
           Title.Caption = 'C'#243'digo'
           Width = 61
+          Visible = True
+        end
+        item
+          Expanded = False
+          FieldName = 'id_grupo'
+          Title.Alignment = taCenter
+          Title.Caption = 'C'#243'd. grupo'
+          Width = 80
           Visible = True
         end
         item
@@ -379,22 +383,24 @@ object ProdutosBuscarView: TProdutosBuscarView
         end
         item
           Expanded = False
-          FieldName = 'preco'
-          Title.Caption = 'Pre'#231'o'
-          Width = 104
+          FieldName = 'estoque'
+          Title.Alignment = taCenter
+          Title.Caption = 'Estoque'
+          Width = 120
           Visible = True
         end
         item
           Expanded = False
-          FieldName = 'ncm'
-          Title.Caption = 'NCM'
-          Width = 117
+          FieldName = 'preco'
+          Title.Alignment = taCenter
+          Title.Caption = 'Pre'#231'o'
+          Width = 104
           Visible = True
         end>
     end
   end
   object DataSource1: TDataSource
-    DataSet = ProdutosDM.QBuscar
+    DataSet = ProdutosDM.QListar
     Left = 136
     Top = 257
   end

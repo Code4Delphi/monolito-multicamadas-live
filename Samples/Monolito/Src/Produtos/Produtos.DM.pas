@@ -12,17 +12,19 @@ uses
 type
   TProdutosDM = class(TDataModule)
     QCadastrar: TFDQuery;
+    QListar: TFDQuery;
     QCadastrarid: TFDAutoIncField;
+    QCadastrarid_grupo: TIntegerField;
     QCadastrarnome: TWideStringField;
-    QCadastrardescricao: TWideMemoField;
+    QCadastrardescricao: TWideStringField;
+    QCadastrarestoque: TFloatField;
     QCadastrarpreco: TFloatField;
-    QCadastrarncm: TIntegerField;
-    QBuscar: TFDQuery;
-    QBuscarid: TFDAutoIncField;
-    QBuscarnome: TWideStringField;
-    QBuscardescricao: TWideMemoField;
-    QBuscarpreco: TFloatField;
-    QBuscarncm: TIntegerField;
+    QListarid: TFDAutoIncField;
+    QListarid_grupo: TIntegerField;
+    QListarnome: TWideStringField;
+    QListardescricao: TWideStringField;
+    QListarestoque: TFloatField;
+    QListarpreco: TFloatField;
   private
   public
     procedure Get(const AId: Integer);
@@ -47,11 +49,11 @@ end;
 
 procedure TProdutosDM.List(const ACondicao: string);
 begin
-  QBuscar.Close;
-  QBuscar.SQL.Clear;
-  QBuscar.SQL.Add('select *from produtos');
-  QBuscar.SQL.Add(ACondicao);
-  QBuscar.Open;
+  QListar.Close;
+  QListar.SQL.Clear;
+  QListar.SQL.Add('select * from produtos');
+  QListar.SQL.Add(ACondicao);
+  QListar.Open;
 end;
 
 end.

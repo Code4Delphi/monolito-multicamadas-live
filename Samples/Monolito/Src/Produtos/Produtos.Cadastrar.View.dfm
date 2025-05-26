@@ -10,6 +10,13 @@ object ProdutosCadastrarView: TProdutosCadastrarView
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  KeyPreview = True
+  Position = poScreenCenter
+  OnClose = FormClose
+  OnCreate = FormCreate
+  OnKeyDown = FormKeyDown
+  OnKeyPress = FormKeyPress
+  OnShow = FormShow
   TextHeight = 15
   object pnRodape: TPanel
     Left = 0
@@ -22,7 +29,6 @@ object ProdutosCadastrarView: TProdutosCadastrarView
     Padding.Right = 2
     Padding.Bottom = 2
     TabOrder = 0
-    ExplicitTop = 161
     object btnGravar: TBitBtn
       Left = 414
       Top = 3
@@ -88,7 +94,9 @@ object ProdutosCadastrarView: TProdutosCadastrarView
         FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF
         00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF}
       TabOrder = 0
-      ExplicitLeft = 537
+      OnClick = btnGravarClick
+      ExplicitLeft = 408
+      ExplicitTop = 6
     end
     object btnCancelar: TBitBtn
       Left = 544
@@ -151,7 +159,7 @@ object ProdutosCadastrarView: TProdutosCadastrarView
         342E2E2B2B2D2B1B150000001D211B1D1D1D1D1D1D1D211D1D211B211D1D1B1B
         0000000000000000000000000000000000000000000000000000}
       TabOrder = 1
-      ExplicitLeft = 667
+      OnClick = btnCancelarClick
     end
   end
   object pnDados: TPanel
@@ -162,10 +170,9 @@ object ProdutosCadastrarView: TProdutosCadastrarView
     Align = alClient
     TabOrder = 1
     ExplicitTop = -3
-    ExplicitHeight = 171
     object Label1: TLabel
       Left = 24
-      Top = 24
+      Top = 27
       Width = 38
       Height = 13
       Caption = 'C'#243'digo'
@@ -178,8 +185,8 @@ object ProdutosCadastrarView: TProdutosCadastrarView
       ParentFont = False
     end
     object Label2: TLabel
-      Left = 86
-      Top = 24
+      Left = 87
+      Top = 27
       Width = 32
       Height = 13
       Caption = 'Nome'
@@ -193,15 +200,15 @@ object ProdutosCadastrarView: TProdutosCadastrarView
     end
     object Label3: TLabel
       Left = 24
-      Top = 79
+      Top = 80
       Width = 51
       Height = 15
       Caption = 'Descri'#231#227'o'
       FocusControl = edtDescricao
     end
     object Label4: TLabel
-      Left = 439
-      Top = 79
+      Left = 460
+      Top = 80
       Width = 32
       Height = 13
       Caption = 'Pre'#231'o'
@@ -215,11 +222,25 @@ object ProdutosCadastrarView: TProdutosCadastrarView
     end
     object Label5: TLabel
       Left = 552
-      Top = 79
-      Width = 28
+      Top = 80
+      Width = 60
       Height = 15
-      Caption = 'NCM'
-      FocusControl = edtLCM
+      Caption = 'C'#243'd. grupo'
+      FocusControl = edtIdGrupo
+    end
+    object Label6: TLabel
+      Left = 368
+      Top = 80
+      Width = 45
+      Height = 13
+      Caption = 'Estoque'
+      FocusControl = edtEstoque
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = [fsBold]
+      ParentFont = False
     end
     object edtCodigo: TDBEdit
       Left = 24
@@ -233,7 +254,7 @@ object ProdutosCadastrarView: TProdutosCadastrarView
       TabOrder = 0
     end
     object edtNome: TDBEdit
-      Left = 86
+      Left = 87
       Top = 43
       Width = 555
       Height = 23
@@ -244,34 +265,43 @@ object ProdutosCadastrarView: TProdutosCadastrarView
     object edtDescricao: TDBEdit
       Left = 21
       Top = 98
-      Width = 412
+      Width = 345
       Height = 23
       DataField = 'descricao'
       DataSource = DataSource1
       TabOrder = 2
     end
     object edtPreco: TDBEdit
-      Left = 439
+      Left = 460
       Top = 98
-      Width = 109
+      Width = 90
       Height = 23
       DataField = 'preco'
       DataSource = DataSource1
-      TabOrder = 3
+      TabOrder = 4
     end
-    object edtLCM: TDBEdit
+    object edtIdGrupo: TDBEdit
       Left = 552
       Top = 98
-      Width = 87
+      Width = 90
       Height = 23
-      DataField = 'ncm'
+      DataField = 'id_grupo'
       DataSource = DataSource1
-      TabOrder = 4
+      TabOrder = 5
+    end
+    object edtEstoque: TDBEdit
+      Left = 368
+      Top = 98
+      Width = 90
+      Height = 23
+      DataField = 'estoque'
+      DataSource = DataSource1
+      TabOrder = 3
     end
   end
   object DataSource1: TDataSource
-    DataSet = ProdutosDM.QBuscar
-    Left = 336
-    Top = 104
+    DataSet = ProdutosDM.QCadastrar
+    Left = 296
+    Top = 8
   end
 end

@@ -24,49 +24,67 @@ object ProdutosDM: TProdutosDM
       ReadOnly = False
       DisplayFormat = '000000'
     end
+    object QCadastrarid_grupo: TIntegerField
+      FieldName = 'id_grupo'
+      Origin = 'id_grupo'
+    end
     object QCadastrarnome: TWideStringField
       FieldName = 'nome'
       Origin = 'nome'
-      Size = 50
+      Size = 40
     end
-    object QCadastrardescricao: TWideMemoField
+    object QCadastrardescricao: TWideStringField
       FieldName = 'descricao'
       Origin = 'descricao'
-      BlobType = ftWideMemo
+      Size = 40
+    end
+    object QCadastrarestoque: TFloatField
+      FieldName = 'estoque'
+      Origin = 'estoque'
+      DisplayFormat = ',,0.00'
     end
     object QCadastrarpreco: TFloatField
       FieldName = 'preco'
       Origin = 'preco'
       DisplayFormat = ',,0.00'
     end
-    object QCadastrarncm: TIntegerField
-      FieldName = 'ncm'
-      Origin = 'ncm'
-    end
   end
-  object QBuscar: TFDQuery
+  object QListar: TFDQuery
     Connection = ConexaoDM.FDConnection1
     SQL.Strings = (
       'select * from produtos')
     Left = 200
-    Top = 80
-    object QBuscarid: TFDAutoIncField
+    Top = 72
+    object QListarid: TFDAutoIncField
       FieldName = 'id'
+      Origin = 'id'
+      ProviderFlags = [pfInWhere, pfInKey]
       ReadOnly = False
+      DisplayFormat = '000000'
     end
-    object QBuscarnome: TWideStringField
+    object QListarid_grupo: TIntegerField
+      FieldName = 'id_grupo'
+      Origin = 'id_grupo'
+    end
+    object QListarnome: TWideStringField
       FieldName = 'nome'
-      Size = 50
+      Origin = 'nome'
+      Size = 40
     end
-    object QBuscardescricao: TWideMemoField
+    object QListardescricao: TWideStringField
       FieldName = 'descricao'
-      BlobType = ftWideMemo
+      Origin = 'descricao'
+      Size = 40
     end
-    object QBuscarpreco: TFloatField
+    object QListarestoque: TFloatField
+      FieldName = 'estoque'
+      Origin = 'estoque'
+      DisplayFormat = ',,0.00'
+    end
+    object QListarpreco: TFloatField
       FieldName = 'preco'
-    end
-    object QBuscarncm: TIntegerField
-      FieldName = 'ncm'
+      Origin = 'preco'
+      DisplayFormat = ',,0.00'
     end
   end
 end
