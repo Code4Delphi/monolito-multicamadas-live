@@ -2,8 +2,8 @@ object MainView: TMainView
   Left = 0
   Top = 0
   Caption = 'MainView'
-  ClientHeight = 683
-  ClientWidth = 968
+  ClientHeight = 512
+  ClientWidth = 710
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText

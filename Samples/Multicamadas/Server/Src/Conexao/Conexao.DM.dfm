@@ -1,7 +1,7 @@
 object ConexaoDM: TConexaoDM
   OnCreate = DataModuleCreate
-  Height = 435
-  Width = 385
+  Height = 480
+  Width = 640
   object FDGUIxWaitCursor1: TFDGUIxWaitCursor
     Provider = 'Forms'
     Left = 136
@@ -15,6 +15,7 @@ object ConexaoDM: TConexaoDM
     Params.Strings = (
       'Database=C:\Lives\monolito-multicamadas-live\Samples\DB\dados.db'
       'DriverID=SQLite')
+    Connected = True
     LoginPrompt = False
     Left = 136
     Top = 56

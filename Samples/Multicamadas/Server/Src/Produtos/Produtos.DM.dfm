@@ -1,0 +1,90 @@
+object ProdutosDM: TProdutosDM
+  Height = 480
+  Width = 640
+  object QCadastrar: TFDQuery
+    Connection = ConexaoDM.FDConnection1
+    SQL.Strings = (
+      'select * '
+      'from produtos'
+      'where id = :ID'
+      'limit 1')
+    Left = 112
+    Top = 72
+    ParamData = <
+      item
+        Name = 'ID'
+        DataType = ftInteger
+        ParamType = ptInput
+        Value = Null
+      end>
+    object QCadastrarid: TFDAutoIncField
+      FieldName = 'id'
+      Origin = 'id'
+      ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = False
+      DisplayFormat = '000000'
+    end
+    object QCadastrarid_grupo: TIntegerField
+      FieldName = 'id_grupo'
+      Origin = 'id_grupo'
+    end
+    object QCadastrarnome: TWideStringField
+      FieldName = 'nome'
+      Origin = 'nome'
+      Size = 40
+    end
+    object QCadastrardescricao: TWideStringField
+      FieldName = 'descricao'
+      Origin = 'descricao'
+      Size = 40
+    end
+    object QCadastrarestoque: TFloatField
+      FieldName = 'estoque'
+      Origin = 'estoque'
+      DisplayFormat = ',,0.00'
+    end
+    object QCadastrarpreco: TFloatField
+      FieldName = 'preco'
+      Origin = 'preco'
+      DisplayFormat = ',,0.00'
+    end
+  end
+  object QListar: TFDQuery
+    Connection = ConexaoDM.FDConnection1
+    SQL.Strings = (
+      'select * from produtos')
+    Left = 200
+    Top = 72
+    object QListarid: TFDAutoIncField
+      FieldName = 'id'
+      Origin = 'id'
+      ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = False
+      DisplayFormat = '000000'
+    end
+    object QListarid_grupo: TIntegerField
+      FieldName = 'id_grupo'
+      Origin = 'id_grupo'
+    end
+    object QListarnome: TWideStringField
+      FieldName = 'nome'
+      Origin = 'nome'
+      Size = 40
+    end
+    object QListardescricao: TWideStringField
+      FieldName = 'descricao'
+      Origin = 'descricao'
+      Size = 40
+    end
+    object QListarestoque: TFloatField
+      FieldName = 'estoque'
+      Origin = 'estoque'
+      DisplayFormat = ',,0.00'
+    end
+    object QListarpreco: TFloatField
+      FieldName = 'preco'
+      Origin = 'preco'
+      DisplayFormat = ',,0.00'
+    end
+  end
+end
