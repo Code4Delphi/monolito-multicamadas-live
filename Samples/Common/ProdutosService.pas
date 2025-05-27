@@ -3,6 +3,7 @@ unit ProdutosService;
 interface
 
 uses
+  System.Generics.Collections,
   XData.Service.Common,
   Produtos.DTO;
 
@@ -14,6 +15,8 @@ type
     function GetEstoque(id: Integer): Double;
     [HttpGet, Route('{id}')]
     function Get(Id: Integer): TProduto;
+    [HttpGet, Route('')]
+    function List: TList<TProduto>;
     [HttpPost, Route('')]
     function Post(Produto: TProduto): Integer;
     [HttpPut, Route('{id}')]

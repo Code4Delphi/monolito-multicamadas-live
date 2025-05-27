@@ -4,6 +4,7 @@ interface
 
 uses
   System.SysUtils,
+  System.Generics.Collections,
   Data.DB,
   XData.Server.Module,
   XData.Service.Common,
@@ -17,6 +18,7 @@ type
   private
     function GetEstoque(id: Integer): Double;
     function Get(Id: Integer): TProduto;
+    function List: TList<TProduto>;
     function Post(Produto: TProduto): Integer;
     procedure Alterar(Id: Integer; Produto: TProduto);
     procedure Delete(Id: Integer);
@@ -43,6 +45,32 @@ begin
   Result.Descricao := ProdutosDm.QListardescricao.AsString;
   Result.Estoque := ProdutosDm.QListarestoque.AsFloat;
   Result.Preco := ProdutosDm.QListarpreco.AsFloat;
+end;
+
+function TProdutosService.List: TList<TProduto>;
+var
+  LObsProduto: TProduto;
+begin
+  Result := TList<TProduto>.Create;
+
+  ProdutosDM.Listar('');
+
+  if ProdutosDm.QListar.IsEmpty then
+    Exit(nil);
+
+  ProdutosDm.QListar.First;
+  while not ProdutosDm.QListar.Eof do
+  begin
+    LObsProduto := TProduto.Create;
+    LObsProduto.Id := ProdutosDm.QListarid.AsInteger;
+    LObsProduto.Nome := ProdutosDm.QListarnome.AsString;
+    LObsProduto.Descricao := ProdutosDm.QListardescricao.AsString;
+    LObsProduto.Estoque := ProdutosDm.QListarestoque.AsFloat;
+    LObsProduto.Preco := ProdutosDm.QListarpreco.AsFloat;
+    Result.Add(LObsProduto);
+
+    ProdutosDm.QListar.Next;
+  end;
 end;
 
 function TProdutosService.Post(Produto: TProduto): Integer;
