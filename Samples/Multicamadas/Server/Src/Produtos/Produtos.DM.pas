@@ -3,13 +3,36 @@ unit Produtos.DM;
 interface
 
 uses
-  System.SysUtils, System.Classes, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error,
-  FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, Data.DB, FireDAC.Comp.DataSet,
+  System.SysUtils,
+  System.Classes,
+  FireDAC.Stan.Intf,
+  FireDAC.Stan.Option,
+  FireDAC.Stan.Param,
+  FireDAC.Stan.Error,
+  FireDAC.DatS,
+  FireDAC.Phys.Intf,
+  FireDAC.DApt.Intf,
+  FireDAC.Stan.Async,
+  FireDAC.DApt,
+  Data.DB,
+  FireDAC.Comp.DataSet,
   FireDAC.Comp.Client,
-  Conexao.DM;
+  FireDAC.UI.Intf,
+  FireDAC.VCLUI.Wait,
+  FireDAC.Stan.ExprFuncs,
+  FireDAC.Phys.SQLiteWrapper.Stat,
+  FireDAC.Phys.SQLiteDef,
+  FireDAC.Stan.Def,
+  FireDAC.Stan.Pool,
+  FireDAC.Phys,
+  FireDAC.Phys.SQLite,
+  FireDAC.Comp.UI;
 
 type
   TProdutosDM = class(TDataModule)
+    FDGUIxWaitCursor1: TFDGUIxWaitCursor;
+    FDPhysSQLiteDriverLink1: TFDPhysSQLiteDriverLink;
+    FDConnection1: TFDConnection;
     QCadastrar: TFDQuery;
     QCadastrarid: TFDAutoIncField;
     QCadastrarid_grupo: TIntegerField;
@@ -24,11 +47,12 @@ type
     QListardescricao: TWideStringField;
     QListarestoque: TFloatField;
     QListarpreco: TFloatField;
+    procedure DataModuleCreate(Sender: TObject);
   private
 
   public
-    procedure Get(const AId: Integer);
-    procedure List(const ACondicao: string);
+    procedure Cadastrar(const AId: Integer);
+    procedure Listar(const ACondicao: string);
   end;
 
 var
@@ -40,14 +64,20 @@ implementation
 
 {$R *.dfm}
 
-procedure TProdutosDM.Get(const AId: Integer);
+procedure TProdutosDM.DataModuleCreate(Sender: TObject);
+begin
+  FDConnection1.Connected := False;
+  //FDConnection1.Params.Database := '..\DB\dados.db';
+end;
+
+procedure TProdutosDM.Cadastrar(const AId: Integer);
 begin
   QCadastrar.Close;
   QCadastrar.ParamByName('id').AsInteger := AId;
   QCadastrar.Open;
 end;
 
-procedure TProdutosDM.List(const ACondicao: string);
+procedure TProdutosDM.Listar(const ACondicao: string);
 begin
   QListar.Close;
   QListar.SQL.Clear;

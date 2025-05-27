@@ -136,11 +136,6 @@
         </DCCReference>
         <DCCReference Include="Src\Produtos\ProdutosService.pas"/>
         <DCCReference Include="Src\Produtos\ProdutosServiceImplementation.pas"/>
-        <DCCReference Include="Src\Conexao\Conexao.DM.pas">
-            <Form>ConexaoDM</Form>
-            <FormType>dfm</FormType>
-            <DesignClass>TDataModule</DesignClass>
-        </DCCReference>
         <DCCReference Include="Src\Produtos\Produtos.DM.pas">
             <Form>ProdutosDM</Form>
             <FormType>dfm</FormType>

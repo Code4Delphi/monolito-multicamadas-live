@@ -3,21 +3,30 @@ unit Main.View;
 interface
 
 uses
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls,
+  Winapi.Windows,
+  Winapi.Messages,
+  System.SysUtils,
+  System.Variants,
+  System.Classes,
+  Vcl.Graphics,
+  Vcl.Controls,
+  Vcl.Forms,
+  Vcl.Dialogs,
+  Vcl.StdCtrls,
   XData.DM;
 
 type
   TMainView = class(TForm)
-    Button1: TButton;
-    Button2: TButton;
+    btnStart: TButton;
+    btnStop: TButton;
     Memo1: TMemo;
-    procedure Button1Click(Sender: TObject);
-    procedure Button2Click(Sender: TObject);
+    procedure btnStartClick(Sender: TObject);
+    procedure btnStopClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
   private
-    { Private declarations }
+    procedure UpdateScreen;
   public
-    { Public declarations }
+
   end;
 
 var
@@ -27,17 +36,33 @@ implementation
 
 {$R *.dfm}
 
-procedure TMainView.Button1Click(Sender: TObject);
+procedure TMainView.FormCreate(Sender: TObject);
 begin
-  XDataDM.SparkleHttpSysDispatcher1.Active := True;
-  Memo1.Lines.Add('## Conectado');
-  Memo1.Lines.Add(XDataDM.XDataServer1.BaseUrl);
+  ReportMemoryLeaksOnShutdown := True;
+  Self.UpdateScreen;
 end;
 
-procedure TMainView.Button2Click(Sender: TObject);
+procedure TMainView.UpdateScreen;
 begin
-  XDataDM.SparkleHttpSysDispatcher1.Active := False;
-  Memo1.Lines.Add('## Desconectado ##');
+  btnStart.Enabled := not XDataDM.SparkleHttpSysDispatcher1.Active;
+  btnStop.Enabled := not btnStart.Enabled;
+
+  if XDataDM.SparkleHttpSysDispatcher1.Active then
+    Memo1.Lines.Add('## Conectado' + sLineBreak + XDataDM.XDataServer1.BaseUrl)
+  else
+    Memo1.Lines.Add('## Desconectado ##');
+end;
+
+procedure TMainView.btnStartClick(Sender: TObject);
+begin
+  XDataDM.SparkleHttpSysDispatcher1.Start;
+  Self.UpdateScreen;
+end;
+
+procedure TMainView.btnStopClick(Sender: TObject);
+begin
+  XDataDM.SparkleHttpSysDispatcher1.Stop;
+  Self.UpdateScreen;
 end;
 
 end.

@@ -10,24 +10,27 @@ object MainView: TMainView
   Font.Height = -12
   Font.Name = 'Segoe UI'
   Font.Style = []
+  KeyPreview = True
+  Position = poScreenCenter
+  OnCreate = FormCreate
   TextHeight = 15
-  object Button1: TButton
+  object btnStart: TButton
     Left = 32
     Top = 41
     Width = 75
     Height = 25
-    Caption = 'Connect'
+    Caption = 'Start'
     TabOrder = 0
-    OnClick = Button1Click
+    OnClick = btnStartClick
   end
-  object Button2: TButton
+  object btnStop: TButton
     Left = 128
     Top = 41
     Width = 75
     Height = 25
-    Caption = 'Disconnect'
+    Caption = 'Stop'
     TabOrder = 1
-    OnClick = Button2Click
+    OnClick = btnStopClick
   end
   object Memo1: TMemo
     Left = 32

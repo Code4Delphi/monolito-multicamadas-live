@@ -1,15 +1,34 @@
 object ProdutosDM: TProdutosDM
+  OnCreate = DataModuleCreate
   Height = 480
   Width = 640
+  object FDGUIxWaitCursor1: TFDGUIxWaitCursor
+    Provider = 'Forms'
+    Left = 136
+    Top = 120
+  end
+  object FDPhysSQLiteDriverLink1: TFDPhysSQLiteDriverLink
+    Left = 136
+    Top = 192
+  end
+  object FDConnection1: TFDConnection
+    Params.Strings = (
+      'Database=C:\Lives\monolito-multicamadas-live\Samples\DB\dados.db'
+      'DriverID=SQLite')
+    Connected = True
+    LoginPrompt = False
+    Left = 136
+    Top = 56
+  end
   object QCadastrar: TFDQuery
-    Connection = ConexaoDM.FDConnection1
+    Connection = FDConnection1
     SQL.Strings = (
       'select * '
       'from produtos'
       'where id = :ID'
       'limit 1')
-    Left = 112
-    Top = 72
+    Left = 136
+    Top = 272
     ParamData = <
       item
         Name = 'ID'
@@ -50,11 +69,11 @@ object ProdutosDM: TProdutosDM
     end
   end
   object QListar: TFDQuery
-    Connection = ConexaoDM.FDConnection1
+    Connection = FDConnection1
     SQL.Strings = (
       'select * from produtos')
-    Left = 200
-    Top = 72
+    Left = 224
+    Top = 272
     object QListarid: TFDAutoIncField
       FieldName = 'id'
       Origin = 'id'
