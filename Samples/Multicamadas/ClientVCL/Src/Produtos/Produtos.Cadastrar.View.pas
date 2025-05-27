@@ -18,8 +18,7 @@ uses
   Vcl.ExtCtrls,
   Vcl.DBCtrls,
   Vcl.Buttons,
-  Data.DB,
-  Produtos.DM;
+  Data.DB;
 
 type
   TProdutosCadastrarView = class(TForm)

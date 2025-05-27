@@ -8,6 +8,7 @@ uses
   System.SysUtils,
   System.Variants,
   System.Classes,
+  System.Generics.Collections,
   Vcl.Graphics,
   Vcl.Controls,
   Vcl.Forms,
@@ -18,7 +19,11 @@ uses
   Vcl.StdCtrls,
   Vcl.Buttons,
   Vcl.ExtCtrls,
-  Produtos.Cadastrar.View, Aurelius.Bind.BaseDataset, Aurelius.Bind.Dataset;
+  XData.Client,
+  Aurelius.Bind.BaseDataset,
+  Aurelius.Bind.Dataset,
+  Produtos.DTO,
+  ProdutosService;
 
 type
   TProdutosBuscarView = class(TForm)
@@ -37,19 +42,28 @@ type
     DataSource1: TDataSource;
     Label2: TLabel;
     AureliusDataset1: TAureliusDataset;
-    DataSource2: TDataSource;
+    btnAtualizar: TBitBtn;
+    btnExcluir: TBitBtn;
+    AureliusDataset1Nome: TStringField;
+    AureliusDataset1Id: TIntegerField;
+    AureliusDataset1Estoque: TFloatField;
+    AureliusDataset1Preco: TFloatField;
+    AureliusDataset1num_item: TIntegerField;
     procedure edtBuscarChange(Sender: TObject);
-    procedure FormCreate(Sender: TObject);
-    procedure FormDestroy(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure btnFecharClick(Sender: TObject);
     procedure btnCadastrarClick(Sender: TObject);
     procedure DBGrid1KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure btnAlterarClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
+    procedure btnAtualizarClick(Sender: TObject);
+    procedure DBGrid1DblClick(Sender: TObject);
   private
+    FXDataClient: TXDataClient;
+    FList: TList<TProduto>;
     procedure ListarDados;
     procedure ChamarTelaCadastrar(const AId: Integer = 0);
-
   public
 
   end;
@@ -63,12 +77,16 @@ implementation
 
 procedure TProdutosBuscarView.FormCreate(Sender: TObject);
 begin
-  ProdutosDM := TProdutosDM.Create(nil);
+  FXDataClient := TXDataClient.Create;
+  FXDataClient.Uri := 'http://localhost:2001/tms/xdata/';
+
+  FList := TList<TProduto>.Create;
 end;
 
 procedure TProdutosBuscarView.FormDestroy(Sender: TObject);
 begin
-  FreeAndNil(ProdutosDM);
+  FList.Free;
+  FXDataClient.Free;
 end;
 
 procedure TProdutosBuscarView.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -79,6 +97,8 @@ begin
       if ssAlt in Shift then
         Key := 0;
     end;
+    VK_F5:
+      Self.ListarDados;
     VK_ESCAPE:
       btnFechar.Click;
   end;
@@ -100,27 +120,43 @@ begin
   Self.Close;
 end;
 
+procedure TProdutosBuscarView.btnAtualizarClick(Sender: TObject);
+begin
+  Self.ListarDados;
+end;
+
 procedure TProdutosBuscarView.ListarDados;
 var
   LStrBuscar: string;
-  LCondicao: string;
+  LProdutosService: IProdutosService;
+  LFiltros: TProdutoFiltros;
 begin
-  LStrBuscar := QuotedStr('%'+ edtBuscar.Text +'%');
-  LCondicao := '';
-  case rdGroupFiltros.ItemIndex of
-    0: LCondicao := 'where id like ' + LStrBuscar;
-    1: LCondicao := 'where nome like ' + LStrBuscar;
-    2: LCondicao := 'where preco like ' + LStrBuscar;
+  AureliusDataset1.Close;
+  LProdutosService := FXDataClient.Service<IProdutosService>;
+  FreeAndNil(FList);
+
+  LFiltros := TProdutoFiltros.Create;
+  try
+    case rdGroupFiltros.ItemIndex of
+      0: LFiltros.Id := StrToIntDef(edtBuscar.Text, 0);
+      1: LFiltros.Nome := edtBuscar.Text;
+      2: LFiltros.NumItem := StrToIntDef(edtBuscar.Text, 0);
+    end;
+
+    FList := LProdutosService.List(LFiltros);
+  finally
+    LFiltros.Free;
   end;
 
-  LCondicao := '';
-  ProdutosDM.List(LCondicao);
-
-  lbTotal.Caption := '000000';
-  if DataSource1.DataSet.IsEmpty then
-    Exit;
+  AureliusDataset1.SetSourceList(FList);
+  AureliusDataset1.Open;
 
   lbTotal.Caption := FormatFloat('000000', DataSource1.DataSet.RecordCount);
+end;
+
+procedure TProdutosBuscarView.DBGrid1DblClick(Sender: TObject);
+begin
+  btnAlterar.Click;
 end;
 
 procedure TProdutosBuscarView.DBGrid1KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -136,25 +172,25 @@ end;
 
 procedure TProdutosBuscarView.btnAlterarClick(Sender: TObject);
 begin
-  if ProdutosDm.QListar.IsEmpty then
-    raise Exception.Create('Selecione um registro para continuar');
-
-  Self.ChamarTelaCadastrar(ProdutosDm.QListarId.AsInteger);
+//  if ProdutosDm.QListar.IsEmpty then
+//    raise Exception.Create('Selecione um registro para continuar');
+//
+//  Self.ChamarTelaCadastrar(ProdutosDm.QListarId.AsInteger);
 end;
 
 procedure TProdutosBuscarView.ChamarTelaCadastrar(const AId: Integer = 0);
 begin
-  var LView := TProdutosCadastrarView.Create(nil);
-  try
-    LView.IdAlterar := AId;
-    if LView.ShowModal <> mrOk then
-      Exit;
-
-    Self.ListarDados;
-    ProdutosDm.QListar.Locate('id', LView.IdSelecionado, [loCaseInsensitive]);
-  finally
-    LView.Free;
-  end;
+//  var LView := TProdutosCadastrarView.Create(nil);
+//  try
+//    LView.IdAlterar := AId;
+//    if LView.ShowModal <> mrOk then
+//      Exit;
+//
+//    Self.ListarDados;
+//    ProdutosDm.QListar.Locate('id', LView.IdSelecionado, [loCaseInsensitive]);
+//  finally
+//    LView.Free;
+//  end;
 end;
 
 end.

@@ -139,10 +139,6 @@
             <Form>ProdutosBuscarView</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="Src\Produtos\Produtos.Cadastrar.View.pas">
-            <Form>ProdutosCadastrarView</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

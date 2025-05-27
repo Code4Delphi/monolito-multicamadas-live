@@ -35,18 +35,16 @@ type
     FDConnection1: TFDConnection;
     QCadastrar: TFDQuery;
     QCadastrarid: TFDAutoIncField;
-    QCadastrarid_grupo: TIntegerField;
     QCadastrarnome: TWideStringField;
-    QCadastrardescricao: TWideStringField;
     QCadastrarestoque: TFloatField;
     QCadastrarpreco: TFloatField;
     QListar: TFDQuery;
     QListarid: TFDAutoIncField;
-    QListarid_grupo: TIntegerField;
     QListarnome: TWideStringField;
-    QListardescricao: TWideStringField;
     QListarestoque: TFloatField;
     QListarpreco: TFloatField;
+    QCadastrarnum_item: TIntegerField;
+    QListarnum_item: TIntegerField;
     procedure DataModuleCreate(Sender: TObject);
   private
 

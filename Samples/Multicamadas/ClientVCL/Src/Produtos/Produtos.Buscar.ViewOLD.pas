@@ -101,7 +101,7 @@ var
   LProdutosService: IProdutosService;
 begin
   LProdutosService := FXDataClient.Service<IProdutosService>;
-  LList := LProdutosService.List;
+  LList := LProdutosService.List(nil);
   try
     for LProduto in LList do
     begin
@@ -120,7 +120,7 @@ begin
   AureliusDataset1.Close;
 
   LProdutosService := FXDataClient.Service<IProdutosService>;
-  LList := LProdutosService.List;
+  LList := LProdutosService.List(nil);
   try
     AureliusDataset1.SetSourceList(LList);
     AureliusDataset1.Open;

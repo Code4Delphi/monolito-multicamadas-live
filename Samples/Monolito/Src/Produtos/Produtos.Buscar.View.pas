@@ -49,6 +49,7 @@ type
     procedure btnAlterarClick(Sender: TObject);
     procedure btnExcluirClick(Sender: TObject);
     procedure btnAtualizarClick(Sender: TObject);
+    procedure DBGrid1DblClick(Sender: TObject);
   private
     procedure ListarDados;
     procedure ChamarTelaCadastrar(const AId: Integer = 0);
@@ -105,6 +106,11 @@ begin
   Self.Close;
 end;
 
+procedure TProdutosBuscarView.btnAtualizarClick(Sender: TObject);
+begin
+  Self.ListarDados;
+end;
+
 procedure TProdutosBuscarView.ListarDados;
 var
   LStrBuscar: string;
@@ -119,23 +125,18 @@ begin
   end;
 
   ProdutosDM.List(LCondicao);
-
-  lbTotal.Caption := '000000';
-  if DataSource1.DataSet.IsEmpty then
-    Exit;
-
   lbTotal.Caption := FormatFloat('000000', DataSource1.DataSet.RecordCount);
+end;
+
+procedure TProdutosBuscarView.DBGrid1DblClick(Sender: TObject);
+begin
+  btnAlterar.Click;
 end;
 
 procedure TProdutosBuscarView.DBGrid1KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
 begin
   if (ssCtrl in Shift) and (Key = VK_DELETE) then
     Key := 0;
-end;
-
-procedure TProdutosBuscarView.btnAtualizarClick(Sender: TObject);
-begin
-  Self.ListarDados;
 end;
 
 procedure TProdutosBuscarView.btnCadastrarClick(Sender: TObject);

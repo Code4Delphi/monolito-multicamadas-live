@@ -19,7 +19,7 @@ type
     FDm: TProdutosDM;
     function GetEstoque(id: Integer): Double;
     function Get(Id: Integer): TProduto;
-    function List: TList<TProduto>;
+    function List([FromQuery] Filtros: TProdutoFiltros): TList<TProduto>;
     function Post(Produto: TProduto): Integer;
     procedure Alterar(Id: Integer; Produto: TProduto);
     procedure Delete(Id: Integer);
@@ -57,18 +57,37 @@ begin
   Result := TProduto.Create;
   Result.Id := FDm.QListarid.AsInteger;
   Result.Nome := FDm.QListarnome.AsString;
-  Result.Descricao := FDm.QListardescricao.AsString;
   Result.Estoque := FDm.QListarestoque.AsFloat;
   Result.Preco := FDm.QListarpreco.AsFloat;
+  Result.num_item := FDm.QListarnum_item.AsInteger;
 end;
 
-function TProdutosService.List: TList<TProduto>;
-var
-  LObsProduto: TProduto;
+function TProdutosService.List([FromQuery] Filtros: TProdutoFiltros): TList<TProduto>;
 begin
   Result := TList<TProduto>.Create;
 
-  FDm.Listar('');
+  FDm.QListar.Close;
+  FDm.QListar.SQL.Add('where 1 = 1');
+
+  if Filtros.Id > 0 then
+  begin
+    FDm.QListar.SQL.Add('and produtos.id = :Id');
+    FDm.QListar.ParamByName('Id').AsInteger := Filtros.Id;
+  end;
+
+  if not Filtros.Nome.IsEmpty then
+  begin
+    FDm.QListar.SQL.Add('and produtos.nome like :Nome');
+    FDm.QListar.ParamByName('Nome').AsString := '%' + Filtros.Nome + '%';
+  end;
+
+  if Filtros.NumItem > 0 then
+  begin
+    FDm.QListar.SQL.Add('and produtos.num_item like :NumItem');
+    FDm.QListar.ParamByName('NumItem').AsString := '%' + Filtros.NumItem.ToString + '%';
+  end;
+
+  FDm.QListar.Open;
 
   if FDm.QListar.IsEmpty then
     Exit(nil);
@@ -76,13 +95,13 @@ begin
   FDm.QListar.First;
   while not FDm.QListar.Eof do
   begin
-    LObsProduto := TProduto.Create;
-    LObsProduto.Id := FDm.QListarid.AsInteger;
-    LObsProduto.Nome := FDm.QListarnome.AsString;
-    LObsProduto.Descricao := FDm.QListardescricao.AsString;
-    LObsProduto.Estoque := FDm.QListarestoque.AsFloat;
-    LObsProduto.Preco := FDm.QListarpreco.AsFloat;
-    Result.Add(LObsProduto);
+    var LProduto := TProduto.Create;
+    LProduto.Id := FDm.QListarid.AsInteger;
+    LProduto.Nome := FDm.QListarnome.AsString;
+    LProduto.Estoque := FDm.QListarestoque.AsFloat;
+    LProduto.Preco := FDm.QListarpreco.AsFloat;
+    LProduto.NumItem := FDm.QListarnum_item.AsInteger;
+    Result.Add(LProduto);
 
     FDm.QListar.Next;
   end;
@@ -94,9 +113,9 @@ begin
   FDm.QCadastrar.Append;
   FDm.QCadastrarid.AsInteger := Produto.Id;
   FDm.QCadastrarnome.AsString := Produto.Nome;
-  FDm.QCadastrardescricao.AsString := Produto.Descricao;
   FDm.QCadastrarestoque.AsFloat := Produto.Estoque;
   FDm.QCadastrarpreco.AsFloat := Produto.Preco;
+  FDm.QCadastrarnum_item.AsInteger := Produto.NumItem;
   FDm.QCadastrar.Post;
 
   Result := FDm.QCadastrarid.AsInteger;
@@ -110,11 +129,10 @@ begin
     raise Exception.Create('Produto não encontrado para alteração');
 
   FDm.QCadastrar.Edit;
-  FDm.QCadastrarid_grupo.AsInteger := Produto.id_grupo;
   FDm.QCadastrarnome.AsString := Produto.Nome;
-  FDm.QCadastrardescricao.AsString := Produto.Descricao;
   FDm.QCadastrarestoque.AsFloat := Produto.Estoque;
   FDm.QCadastrarpreco.AsFloat := Produto.Preco;
+  FDm.QCadastrarnum_item.AsFloat := Produto.NumItem;
   FDm.QCadastrar.Post;
 end;
 

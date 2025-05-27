@@ -493,6 +493,7 @@ object ProdutosBuscarView: TProdutosBuscarView
       TitleFont.Height = -11
       TitleFont.Name = 'Tahoma'
       TitleFont.Style = [fsBold]
+      OnDblClick = DBGrid1DblClick
       OnKeyDown = DBGrid1KeyDown
       Columns = <
         item

@@ -6,8 +6,7 @@ uses
   Produtos.Buscar.ViewOLD in 'Src\Produtos\Produtos.Buscar.ViewOLD.pas' {ProdutosBuscarViewOLD},
   Produtos.DTO in '..\..\Common\Produtos.DTO.pas',
   ProdutosService in '..\..\Common\ProdutosService.pas',
-  Produtos.Buscar.View in 'Src\Produtos\Produtos.Buscar.View.pas' {ProdutosBuscarView},
-  Produtos.Cadastrar.View in 'Src\Produtos\Produtos.Cadastrar.View.pas' {ProdutosCadastrarView};
+  Produtos.Buscar.View in 'Src\Produtos\Produtos.Buscar.View.pas' {ProdutosBuscarView};
 
 {$R *.res}
 
