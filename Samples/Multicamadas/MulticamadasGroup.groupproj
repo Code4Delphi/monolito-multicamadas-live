@@ -6,7 +6,7 @@
         <Projects Include="Server\Server.dproj">
             <Dependencies/>
         </Projects>
-        <Projects Include="Client\Client.dproj">
+        <Projects Include="ClientVCL\ClientVCL.dproj">
             <Dependencies/>
         </Projects>
     </ItemGroup>
@@ -26,23 +26,23 @@
     <Target Name="Server:Make">
         <MSBuild Projects="Server\Server.dproj" Targets="Make"/>
     </Target>
-    <Target Name="Client">
-        <MSBuild Projects="Client\Client.dproj"/>
+    <Target Name="ClientVCL">
+        <MSBuild Projects="ClientVCL\ClientVCL.dproj"/>
     </Target>
-    <Target Name="Client:Clean">
-        <MSBuild Projects="Client\Client.dproj" Targets="Clean"/>
+    <Target Name="ClientVCL:Clean">
+        <MSBuild Projects="ClientVCL\ClientVCL.dproj" Targets="Clean"/>
     </Target>
-    <Target Name="Client:Make">
-        <MSBuild Projects="Client\Client.dproj" Targets="Make"/>
+    <Target Name="ClientVCL:Make">
+        <MSBuild Projects="ClientVCL\ClientVCL.dproj" Targets="Make"/>
     </Target>
     <Target Name="Build">
-        <CallTarget Targets="Server;Client"/>
+        <CallTarget Targets="Server;ClientVCL"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="Server:Clean;Client:Clean"/>
+        <CallTarget Targets="Server:Clean;ClientVCL:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="Server:Make;Client:Make"/>
+        <CallTarget Targets="Server:Make;ClientVCL:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>

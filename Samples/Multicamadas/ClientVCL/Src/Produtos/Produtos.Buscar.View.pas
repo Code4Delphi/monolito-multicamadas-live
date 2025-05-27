@@ -18,8 +18,7 @@ uses
   Vcl.StdCtrls,
   Vcl.Buttons,
   Vcl.ExtCtrls,
-  Produtos.Cadastrar.View,
-  Produtos.DM;
+  Produtos.Cadastrar.View, Aurelius.Bind.BaseDataset, Aurelius.Bind.Dataset;
 
 type
   TProdutosBuscarView = class(TForm)
@@ -37,8 +36,8 @@ type
     DBGrid1: TDBGrid;
     DataSource1: TDataSource;
     Label2: TLabel;
-    btnExcluir: TBitBtn;
-    btnAtualizar: TBitBtn;
+    AureliusDataset1: TAureliusDataset;
+    DataSource2: TDataSource;
     procedure edtBuscarChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -47,8 +46,6 @@ type
     procedure btnCadastrarClick(Sender: TObject);
     procedure DBGrid1KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure btnAlterarClick(Sender: TObject);
-    procedure btnExcluirClick(Sender: TObject);
-    procedure btnAtualizarClick(Sender: TObject);
   private
     procedure ListarDados;
     procedure ChamarTelaCadastrar(const AId: Integer = 0);
@@ -82,8 +79,6 @@ begin
       if ssAlt in Shift then
         Key := 0;
     end;
-    VK_F5:
-      btnAtualizar.Click;
     VK_ESCAPE:
       btnFechar.Click;
   end;
@@ -118,6 +113,7 @@ begin
     2: LCondicao := 'where preco like ' + LStrBuscar;
   end;
 
+  LCondicao := '';
   ProdutosDM.List(LCondicao);
 
   lbTotal.Caption := '000000';
@@ -133,11 +129,6 @@ begin
     Key := 0;
 end;
 
-procedure TProdutosBuscarView.btnAtualizarClick(Sender: TObject);
-begin
-  Self.ListarDados;
-end;
-
 procedure TProdutosBuscarView.btnCadastrarClick(Sender: TObject);
 begin
   Self.ChamarTelaCadastrar;
@@ -149,18 +140,6 @@ begin
     raise Exception.Create('Selecione um registro para continuar');
 
   Self.ChamarTelaCadastrar(ProdutosDm.QListarId.AsInteger);
-end;
-
-procedure TProdutosBuscarView.btnExcluirClick(Sender: TObject);
-begin
-  if ProdutosDm.QListar.IsEmpty then
-    raise Exception.Create('Selecione um registro para continuar');
-
-  if MessageDlg('Deseja realmente excluir este registro?', mtConfirmation, [mbYes, mbNo], 0) <> mrYes then
-    Exit;
-
-  ProdutosDm.QListar.Delete;
-  Self.ListarDados;
 end;
 
 procedure TProdutosBuscarView.ChamarTelaCadastrar(const AId: Integer = 0);

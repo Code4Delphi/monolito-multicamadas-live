@@ -1,4 +1,4 @@
-unit Produtos.Buscar.View;
+unit Produtos.Buscar.ViewOLD;
 
 interface
 
@@ -13,15 +13,18 @@ uses
   Vcl.Controls,
   Vcl.Forms,
   Vcl.Dialogs,
-  XData.Client,
+  Vcl.Grids,
+  Vcl.DBGrids,
   Vcl.StdCtrls,
+  Data.DB,
   Produtos.DTO,
-  ProdutosService, Data.DB, Aurelius.Bind.BaseDataset, Aurelius.Bind.Dataset, Vcl.Grids, Vcl.DBGrids, FireDAC.Stan.Intf,
-  FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
-  FireDAC.Comp.DataSet, FireDAC.Comp.Client;
+  ProdutosService,
+  XData.Client,
+  Aurelius.Bind.BaseDataset,
+  Aurelius.Bind.Dataset;
 
 type
-  TProdutosBuscarView = class(TForm)
+  TProdutosBuscarViewOLD = class(TForm)
     btnPost: TButton;
     btnListar: TButton;
     btnGet: TButton;
@@ -30,20 +33,12 @@ type
     DataSource1: TDataSource;
     DBGrid1: TDBGrid;
     btnListDataSet: TButton;
-    Button1: TButton;
-    FDMemTable1: TFDMemTable;
-    DBGrid2: TDBGrid;
-    DataSource2: TDataSource;
-    FDMemTable1Id: TIntegerField;
-    FDMemTable1Name: TStringField;
-    FDMemTable1Preco: TFloatField;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure btnPostClick(Sender: TObject);
     procedure btnGetClick(Sender: TObject);
     procedure btnListarClick(Sender: TObject);
     procedure btnListDataSetClick(Sender: TObject);
-    procedure Button1Click(Sender: TObject);
   private
     FXDataClient: TXDataClient;
     FList: TList<TProduto>;
@@ -55,22 +50,21 @@ implementation
 
 {$R *.dfm}
 
-procedure TProdutosBuscarView.FormCreate(Sender: TObject);
+procedure TProdutosBuscarViewOLD.FormCreate(Sender: TObject);
 begin
-  ReportMemoryLeaksOnShutdown := True;
   FXDataClient := TXDataClient.Create;
   FXDataClient.Uri := 'http://localhost:2001/tms/xdata/';
 
   FList := TList<TProduto>.Create;
 end;
 
-procedure TProdutosBuscarView.FormDestroy(Sender: TObject);
+procedure TProdutosBuscarViewOLD.FormDestroy(Sender: TObject);
 begin
   FList.Free;
   FXDataClient.Free;
 end;
 
-procedure TProdutosBuscarView.btnPostClick(Sender: TObject);
+procedure TProdutosBuscarViewOLD.btnPostClick(Sender: TObject);
 var
   LProduto: TProduto;
   LProdutosService: IProdutosService;
@@ -90,7 +84,7 @@ begin
   end;
 end;
 
-procedure TProdutosBuscarView.btnGetClick(Sender: TObject);
+procedure TProdutosBuscarViewOLD.btnGetClick(Sender: TObject);
 var
   LProduto: TProduto;
   LProdutosService: IProdutosService;
@@ -100,7 +94,7 @@ begin
   ShowMessage('Id inserido: ' + LProduto.Nome);
 end;
 
-procedure TProdutosBuscarView.btnListarClick(Sender: TObject);
+procedure TProdutosBuscarViewOLD.btnListarClick(Sender: TObject);
 var
   LList: TList<TProduto>;
   LProduto: TProduto;
@@ -118,22 +112,8 @@ begin
   end;
 end;
 
-//procedure TProdutosBuscarView.btnListDataSetClick(Sender: TObject);
-//var
-//  LProduto: TProduto;
-//  LProdutosService: IProdutosService;
-//begin
-//  AureliusDataset1.Close;
-//  LProdutosService := FXDataClient.Service<IProdutosService>;
-//  FreeAndNil(FList);
-//  FList := LProdutosService.List;
-//  AureliusDataset1.SetSourceList(FList);
-//  AureliusDataset1.Open;
-//end;
-
-procedure TProdutosBuscarView.btnListDataSetClick(Sender: TObject);
+procedure TProdutosBuscarViewOLD.btnListDataSetClick(Sender: TObject);
 var
-  LProduto: TProduto;
   LProdutosService: IProdutosService;
   LList: TList<TProduto>;
 begin
@@ -144,31 +124,6 @@ begin
   try
     AureliusDataset1.SetSourceList(LList);
     AureliusDataset1.Open;
-  finally
-    LList.Free;
-  end;
-end;
-
-procedure TProdutosBuscarView.Button1Click(Sender: TObject);
-var
-  LProduto: TProduto;
-  LProdutosService: IProdutosService;
-  LList: TList<TProduto>;
-begin
-  FDMemTable1.Close;
-  FDMemTable1.Open;
-
-  LProdutosService := FXDataClient.Service<IProdutosService>;
-  LList := LProdutosService.List;
-  try
-    for LProduto in LList do
-    begin
-      FDMemTable1.Append;
-      FDMemTable1Id.AsInteger := LProduto.Id;
-      FDMemTable1Name.AsString := LProduto.Nome;
-      FDMemTable1Preco.AsFloat := LProduto.Preco;
-      FDMemTable1.Post;
-    end;
   finally
     LList.Free;
   end;

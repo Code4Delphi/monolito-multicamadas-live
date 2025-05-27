@@ -1,4 +1,4 @@
-object ProdutosBuscarView: TProdutosBuscarView
+object ProdutosBuscarViewOLD: TProdutosBuscarViewOLD
   Left = 0
   Top = 0
   Caption = 'Buscar produtos'
@@ -73,28 +73,6 @@ object ProdutosBuscarView: TProdutosBuscarView
     TabOrder = 5
     OnClick = btnListDataSetClick
   end
-  object Button1: TButton
-    Left = 800
-    Top = 144
-    Width = 75
-    Height = 25
-    Caption = 'Button1'
-    TabOrder = 6
-    OnClick = Button1Click
-  end
-  object DBGrid2: TDBGrid
-    Left = 766
-    Top = 256
-    Width = 385
-    Height = 225
-    DataSource = DataSource2
-    TabOrder = 7
-    TitleFont.Charset = DEFAULT_CHARSET
-    TitleFont.Color = clWindowText
-    TitleFont.Height = -12
-    TitleFont.Name = 'Segoe UI'
-    TitleFont.Style = []
-  end
   object AureliusDataset1: TAureliusDataset
     FieldDefs = <>
     Left = 416
@@ -104,31 +82,5 @@ object ProdutosBuscarView: TProdutosBuscarView
     DataSet = AureliusDataset1
     Left = 528
     Top = 136
-  end
-  object FDMemTable1: TFDMemTable
-    FetchOptions.AssignedValues = [evMode]
-    FetchOptions.Mode = fmAll
-    ResourceOptions.AssignedValues = [rvSilentMode]
-    ResourceOptions.SilentMode = True
-    UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
-    UpdateOptions.CheckRequired = False
-    UpdateOptions.AutoCommitUpdates = True
-    Left = 792
-    Top = 192
-    object FDMemTable1Id: TIntegerField
-      FieldName = 'Id'
-    end
-    object FDMemTable1Name: TStringField
-      FieldName = 'Name'
-      Size = 50
-    end
-    object FDMemTable1Preco: TFloatField
-      FieldName = 'Preco'
-    end
-  end
-  object DataSource2: TDataSource
-    DataSet = FDMemTable1
-    Left = 872
-    Top = 200
   end
 end

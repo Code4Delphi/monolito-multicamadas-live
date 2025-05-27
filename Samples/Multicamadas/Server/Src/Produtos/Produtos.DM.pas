@@ -55,9 +55,6 @@ type
     procedure Listar(const ACondicao: string);
   end;
 
-var
-  ProdutosDM: TProdutosDM;
-
 implementation
 
 {%CLASSGROUP 'Vcl.Controls.TControl'}

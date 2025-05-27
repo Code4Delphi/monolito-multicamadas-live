@@ -2,7 +2,7 @@ program Server;
 
 uses
   Vcl.Forms,
-  Main.View in 'Src\Main.View.pas' {MainView},
+  Server.Main.View in 'Src\Server.Main.View.pas' {ServerMainView},
   XData.DM in 'Src\XData.DM.pas' {XDataDM: TDataModule},
   ProdutosService in '..\..\Common\ProdutosService.pas',
   ProdutosServiceImplementation in 'Src\Produtos\ProdutosServiceImplementation.pas',
@@ -15,7 +15,6 @@ begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TXDataDM, XDataDM);
-  Application.CreateForm(TProdutosDM, ProdutosDM);
-  Application.CreateForm(TMainView, MainView);
+  Application.CreateForm(TServerMainView, ServerMainView);
   Application.Run;
 end.

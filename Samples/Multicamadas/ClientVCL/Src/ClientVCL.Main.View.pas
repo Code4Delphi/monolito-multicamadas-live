@@ -1,4 +1,4 @@
-unit Main.View;
+unit ClientVCL.Main.View;
 
 interface
 
@@ -8,7 +8,7 @@ uses
   Produtos.Buscar.View;
 
 type
-  TMainView = class(TForm)
+  TClientVCLMainView = class(TForm)
     MainMenu1: TMainMenu;
     Cadastros1: TMenuItem;
     Produtos1: TMenuItem;
@@ -16,24 +16,24 @@ type
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormCreate(Sender: TObject);
   private
-    { Private declarations }
+
   public
-    { Public declarations }
+
   end;
 
 var
-  MainView: TMainView;
+  ClientVCLMainView: TClientVCLMainView;
 
 implementation
 
 {$R *.dfm}
 
-procedure TMainView.FormCreate(Sender: TObject);
+procedure TClientVCLMainView.FormCreate(Sender: TObject);
 begin
   ReportMemoryLeaksOnShutdown := True;
 end;
 
-procedure TMainView.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+procedure TClientVCLMainView.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
 begin
   case Key of
     VK_F4:
@@ -46,7 +46,7 @@ begin
   end;
 end;
 
-procedure TMainView.Produtos1Click(Sender: TObject);
+procedure TClientVCLMainView.Produtos1Click(Sender: TObject);
 begin
   var LView := TProdutosBuscarView.Create(nil);
   try

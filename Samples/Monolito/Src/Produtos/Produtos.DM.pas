@@ -5,8 +5,18 @@ interface
 uses
   System.SysUtils,
   System.Classes,
-  Conexao.DM, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
-  FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, Data.DB, FireDAC.Comp.DataSet,
+  Conexao.DM,
+  FireDAC.Stan.Intf,
+  FireDAC.Stan.Option,
+  FireDAC.Stan.Param,
+  FireDAC.Stan.Error,
+  FireDAC.DatS,
+  FireDAC.Phys.Intf,
+  FireDAC.DApt.Intf,
+  FireDAC.Stan.Async,
+  FireDAC.DApt,
+  Data.DB,
+  FireDAC.Comp.DataSet,
   FireDAC.Comp.Client;
 
 type
@@ -14,17 +24,15 @@ type
     QCadastrar: TFDQuery;
     QListar: TFDQuery;
     QCadastrarid: TFDAutoIncField;
-    QCadastrarid_grupo: TIntegerField;
     QCadastrarnome: TWideStringField;
-    QCadastrardescricao: TWideStringField;
     QCadastrarestoque: TFloatField;
     QCadastrarpreco: TFloatField;
     QListarid: TFDAutoIncField;
-    QListarid_grupo: TIntegerField;
     QListarnome: TWideStringField;
-    QListardescricao: TWideStringField;
     QListarestoque: TFloatField;
     QListarpreco: TFloatField;
+    QCadastrarnum_item: TIntegerField;
+    QListarnum_item: TIntegerField;
   private
   public
     procedure Get(const AId: Integer);

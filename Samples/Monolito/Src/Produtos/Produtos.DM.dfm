@@ -24,18 +24,9 @@ object ProdutosDM: TProdutosDM
       ReadOnly = False
       DisplayFormat = '000000'
     end
-    object QCadastrarid_grupo: TIntegerField
-      FieldName = 'id_grupo'
-      Origin = 'id_grupo'
-    end
     object QCadastrarnome: TWideStringField
       FieldName = 'nome'
       Origin = 'nome'
-      Size = 40
-    end
-    object QCadastrardescricao: TWideStringField
-      FieldName = 'descricao'
-      Origin = 'descricao'
       Size = 40
     end
     object QCadastrarestoque: TFloatField
@@ -47,6 +38,10 @@ object ProdutosDM: TProdutosDM
       FieldName = 'preco'
       Origin = 'preco'
       DisplayFormat = ',,0.00'
+    end
+    object QCadastrarnum_item: TIntegerField
+      FieldName = 'num_item'
+      Origin = 'num_item'
     end
   end
   object QListar: TFDQuery
@@ -62,18 +57,9 @@ object ProdutosDM: TProdutosDM
       ReadOnly = False
       DisplayFormat = '000000'
     end
-    object QListarid_grupo: TIntegerField
-      FieldName = 'id_grupo'
-      Origin = 'id_grupo'
-    end
     object QListarnome: TWideStringField
       FieldName = 'nome'
       Origin = 'nome'
-      Size = 40
-    end
-    object QListardescricao: TWideStringField
-      FieldName = 'descricao'
-      Origin = 'descricao'
       Size = 40
     end
     object QListarestoque: TFloatField
@@ -85,6 +71,10 @@ object ProdutosDM: TProdutosDM
       FieldName = 'preco'
       Origin = 'preco'
       DisplayFormat = ',,0.00'
+    end
+    object QListarnum_item: TIntegerField
+      FieldName = 'num_item'
+      Origin = 'num_item'
     end
   end
 end

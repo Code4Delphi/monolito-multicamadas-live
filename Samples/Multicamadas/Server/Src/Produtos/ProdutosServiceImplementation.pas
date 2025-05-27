@@ -16,35 +16,50 @@ type
   [ServiceImplementation]
   TProdutosService = class(TInterfacedObject, IProdutosService)
   private
+    FDm: TProdutosDM;
     function GetEstoque(id: Integer): Double;
     function Get(Id: Integer): TProduto;
     function List: TList<TProduto>;
     function Post(Produto: TProduto): Integer;
     procedure Alterar(Id: Integer; Produto: TProduto);
     procedure Delete(Id: Integer);
+  public
+    constructor Create;
+    destructor Destroy; override;
   end;
 
 implementation
 
+constructor TProdutosService.Create;
+begin
+  FDm := TProdutosDM.Create(nil);
+end;
+
+destructor TProdutosService.Destroy;
+begin
+  FDm.Free;
+  inherited;
+end;
+
 function TProdutosService.GetEstoque(id: Integer): Double;
 begin
-  ProdutosDM.Listar('where id = ' + id.ToString);
-  Result := ProdutosDM.QListarestoque.AsFloat;
+  FDm.Listar('where id = ' + id.ToString);
+  Result := FDm.QListarestoque.AsFloat;
 end;
 
 function TProdutosService.Get(Id: Integer): TProduto;
 begin
-  ProdutosDM.Listar('where id = ' + id.ToString);
+  FDm.Listar('where id = ' + id.ToString);
 
-  if ProdutosDm.QListar.IsEmpty then
+  if FDm.QListar.IsEmpty then
     Exit(nil);
 
   Result := TProduto.Create;
-  Result.Id := ProdutosDm.QListarid.AsInteger;
-  Result.Nome := ProdutosDm.QListarnome.AsString;
-  Result.Descricao := ProdutosDm.QListardescricao.AsString;
-  Result.Estoque := ProdutosDm.QListarestoque.AsFloat;
-  Result.Preco := ProdutosDm.QListarpreco.AsFloat;
+  Result.Id := FDm.QListarid.AsInteger;
+  Result.Nome := FDm.QListarnome.AsString;
+  Result.Descricao := FDm.QListardescricao.AsString;
+  Result.Estoque := FDm.QListarestoque.AsFloat;
+  Result.Preco := FDm.QListarpreco.AsFloat;
 end;
 
 function TProdutosService.List: TList<TProduto>;
@@ -53,64 +68,64 @@ var
 begin
   Result := TList<TProduto>.Create;
 
-  ProdutosDM.Listar('');
+  FDm.Listar('');
 
-  if ProdutosDm.QListar.IsEmpty then
+  if FDm.QListar.IsEmpty then
     Exit(nil);
 
-  ProdutosDm.QListar.First;
-  while not ProdutosDm.QListar.Eof do
+  FDm.QListar.First;
+  while not FDm.QListar.Eof do
   begin
     LObsProduto := TProduto.Create;
-    LObsProduto.Id := ProdutosDm.QListarid.AsInteger;
-    LObsProduto.Nome := ProdutosDm.QListarnome.AsString;
-    LObsProduto.Descricao := ProdutosDm.QListardescricao.AsString;
-    LObsProduto.Estoque := ProdutosDm.QListarestoque.AsFloat;
-    LObsProduto.Preco := ProdutosDm.QListarpreco.AsFloat;
+    LObsProduto.Id := FDm.QListarid.AsInteger;
+    LObsProduto.Nome := FDm.QListarnome.AsString;
+    LObsProduto.Descricao := FDm.QListardescricao.AsString;
+    LObsProduto.Estoque := FDm.QListarestoque.AsFloat;
+    LObsProduto.Preco := FDm.QListarpreco.AsFloat;
     Result.Add(LObsProduto);
 
-    ProdutosDm.QListar.Next;
+    FDm.QListar.Next;
   end;
 end;
 
 function TProdutosService.Post(Produto: TProduto): Integer;
 begin
-  ProdutosDM.Cadastrar(0);
-  ProdutosDm.QCadastrar.Append;
-  ProdutosDm.QCadastrarid.AsInteger := Produto.Id;
-  ProdutosDm.QCadastrarnome.AsString := Produto.Nome;
-  ProdutosDm.QCadastrardescricao.AsString := Produto.Descricao;
-  ProdutosDm.QCadastrarestoque.AsFloat := Produto.Estoque;
-  ProdutosDm.QCadastrarpreco.AsFloat := Produto.Preco;
-  ProdutosDm.QCadastrar.Post;
+  FDm.Cadastrar(0);
+  FDm.QCadastrar.Append;
+  FDm.QCadastrarid.AsInteger := Produto.Id;
+  FDm.QCadastrarnome.AsString := Produto.Nome;
+  FDm.QCadastrardescricao.AsString := Produto.Descricao;
+  FDm.QCadastrarestoque.AsFloat := Produto.Estoque;
+  FDm.QCadastrarpreco.AsFloat := Produto.Preco;
+  FDm.QCadastrar.Post;
 
-  Result := ProdutosDm.QCadastrarid.AsInteger;
+  Result := FDm.QCadastrarid.AsInteger;
 end;
 
 procedure TProdutosService.Alterar(Id: Integer; Produto: TProduto);
 begin
-  ProdutosDM.Cadastrar(Id);
+  FDm.Cadastrar(Id);
 
-  if ProdutosDm.QCadastrar.IsEmpty then
+  if FDm.QCadastrar.IsEmpty then
     raise Exception.Create('Produto não encontrado para alteração');
 
-  ProdutosDm.QCadastrar.Edit;
-  ProdutosDm.QCadastrarid_grupo.AsInteger := Produto.id_grupo;
-  ProdutosDm.QCadastrarnome.AsString := Produto.Nome;
-  ProdutosDm.QCadastrardescricao.AsString := Produto.Descricao;
-  ProdutosDm.QCadastrarestoque.AsFloat := Produto.Estoque;
-  ProdutosDm.QCadastrarpreco.AsFloat := Produto.Preco;
-  ProdutosDm.QCadastrar.Post;
+  FDm.QCadastrar.Edit;
+  FDm.QCadastrarid_grupo.AsInteger := Produto.id_grupo;
+  FDm.QCadastrarnome.AsString := Produto.Nome;
+  FDm.QCadastrardescricao.AsString := Produto.Descricao;
+  FDm.QCadastrarestoque.AsFloat := Produto.Estoque;
+  FDm.QCadastrarpreco.AsFloat := Produto.Preco;
+  FDm.QCadastrar.Post;
 end;
 
 procedure TProdutosService.Delete(Id: Integer);
 begin
-  ProdutosDM.Cadastrar(Id);
+  FDm.Cadastrar(Id);
 
-  if ProdutosDm.QCadastrar.IsEmpty then
+  if FDm.QCadastrar.IsEmpty then
     raise Exception.Create('Produto não encontrado para exclusão');
 
-  ProdutosDm.QCadastrar.Delete;
+  FDm.QCadastrar.Delete;
 end;
 
 initialization

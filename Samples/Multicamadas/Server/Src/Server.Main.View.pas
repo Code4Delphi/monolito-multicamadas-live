@@ -1,4 +1,4 @@
-unit Main.View;
+unit Server.Main.View;
 
 interface
 
@@ -16,7 +16,7 @@ uses
   XData.DM;
 
 type
-  TMainView = class(TForm)
+  TServerMainView = class(TForm)
     btnStart: TButton;
     btnStop: TButton;
     Memo1: TMemo;
@@ -30,19 +30,19 @@ type
   end;
 
 var
-  MainView: TMainView;
+  ServerMainView: TServerMainView;
 
 implementation
 
 {$R *.dfm}
 
-procedure TMainView.FormCreate(Sender: TObject);
+procedure TServerMainView.FormCreate(Sender: TObject);
 begin
   ReportMemoryLeaksOnShutdown := True;
   Self.UpdateScreen;
 end;
 
-procedure TMainView.UpdateScreen;
+procedure TServerMainView.UpdateScreen;
 begin
   btnStart.Enabled := not XDataDM.SparkleHttpSysDispatcher1.Active;
   btnStop.Enabled := not btnStart.Enabled;
@@ -53,13 +53,13 @@ begin
     Memo1.Lines.Add('## Desconectado ##');
 end;
 
-procedure TMainView.btnStartClick(Sender: TObject);
+procedure TServerMainView.btnStartClick(Sender: TObject);
 begin
   XDataDM.SparkleHttpSysDispatcher1.Start;
   Self.UpdateScreen;
 end;
 
-procedure TMainView.btnStopClick(Sender: TObject);
+procedure TServerMainView.btnStopClick(Sender: TObject);
 begin
   XDataDM.SparkleHttpSysDispatcher1.Stop;
   Self.UpdateScreen;

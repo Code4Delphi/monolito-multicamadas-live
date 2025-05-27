@@ -95,6 +95,8 @@ object ProdutosCadastrarView: TProdutosCadastrarView
         00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF}
       TabOrder = 0
       OnClick = btnGravarClick
+      ExplicitLeft = 408
+      ExplicitTop = 6
     end
     object btnCancelar: TBitBtn
       Left = 544
@@ -196,8 +198,16 @@ object ProdutosCadastrarView: TProdutosCadastrarView
       Font.Style = [fsBold]
       ParentFont = False
     end
+    object Label3: TLabel
+      Left = 24
+      Top = 80
+      Width = 51
+      Height = 15
+      Caption = 'Descri'#231#227'o'
+      FocusControl = edtDescricao
+    end
     object Label4: TLabel
-      Left = 179
+      Left = 460
       Top = 80
       Width = 32
       Height = 13
@@ -211,15 +221,15 @@ object ProdutosCadastrarView: TProdutosCadastrarView
       ParentFont = False
     end
     object Label5: TLabel
-      Left = 332
+      Left = 552
       Top = 80
-      Width = 41
+      Width = 60
       Height = 15
-      Caption = 'N'#186' item'
+      Caption = 'C'#243'd. grupo'
       FocusControl = edtIdGrupo
     end
     object Label6: TLabel
-      Left = 27
+      Left = 368
       Top = 80
       Width = 45
       Height = 13
@@ -252,32 +262,41 @@ object ProdutosCadastrarView: TProdutosCadastrarView
       DataSource = DataSource1
       TabOrder = 1
     end
-    object edtPreco: TDBEdit
-      Left = 179
+    object edtDescricao: TDBEdit
+      Left = 21
       Top = 98
-      Width = 150
+      Width = 345
+      Height = 23
+      DataField = 'descricao'
+      DataSource = DataSource1
+      TabOrder = 2
+    end
+    object edtPreco: TDBEdit
+      Left = 460
+      Top = 98
+      Width = 90
       Height = 23
       DataField = 'preco'
       DataSource = DataSource1
-      TabOrder = 3
-    end
-    object edtIdGrupo: TDBEdit
-      Left = 332
-      Top = 98
-      Width = 150
-      Height = 23
-      DataField = 'num_item'
-      DataSource = DataSource1
       TabOrder = 4
     end
-    object edtEstoque: TDBEdit
-      Left = 27
+    object edtIdGrupo: TDBEdit
+      Left = 552
       Top = 98
-      Width = 150
+      Width = 90
+      Height = 23
+      DataField = 'id_grupo'
+      DataSource = DataSource1
+      TabOrder = 5
+    end
+    object edtEstoque: TDBEdit
+      Left = 368
+      Top = 98
+      Width = 90
       Height = 23
       DataField = 'estoque'
       DataSource = DataSource1
-      TabOrder = 2
+      TabOrder = 3
     end
   end
   object DataSource1: TDataSource

@@ -29,9 +29,11 @@ type
     pnDados: TPanel;
     Label1: TLabel;
     Label2: TLabel;
+    Label3: TLabel;
     Label4: TLabel;
     edtCodigo: TDBEdit;
     edtNome: TDBEdit;
+    edtDescricao: TDBEdit;
     edtPreco: TDBEdit;
     Label5: TLabel;
     edtIdGrupo: TDBEdit;

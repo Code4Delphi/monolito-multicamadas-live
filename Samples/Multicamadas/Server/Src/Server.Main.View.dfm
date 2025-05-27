@@ -1,7 +1,7 @@
-object MainView: TMainView
+object ServerMainView: TServerMainView
   Left = 0
   Top = 0
-  Caption = 'MainView'
+  Caption = 'Multicamadas - Server'
   ClientHeight = 378
   ClientWidth = 570
   Color = clBtnFace
