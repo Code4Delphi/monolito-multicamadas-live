@@ -527,9 +527,8 @@ object ProdutosBuscarView: TProdutosBuscarView
         end
         item
           Expanded = False
-          FieldName = 'num_item'
+          FieldName = 'Registro'
           Title.Alignment = taCenter
-          Title.Caption = 'N'#186' item'
           Width = 86
           Visible = True
         end>
@@ -560,8 +559,8 @@ object ProdutosBuscarView: TProdutosBuscarView
       FieldName = 'Preco'
       DisplayFormat = ',,0.00'
     end
-    object AureliusDataset1num_item: TIntegerField
-      FieldName = 'num_item'
+    object AureliusDataset1Registro: TIntegerField
+      FieldName = 'Registro'
     end
   end
 end

@@ -9,13 +9,13 @@ type
     FNome: string;
     FEstoque: Double;
     FPreco: Double;
-    FNumItem: Integer;
+    FRegistro: Integer;
   public
     property Id: Integer read FId write FId;
     property Nome: string read FNome write FNome;
     property Estoque: Double read FEstoque write FEstoque;
     property Preco: Double read FPreco write FPreco;
-    property num_item: Integer read FNumItem write FNumItem;
+    property Registro: Integer read FRegistro write FRegistro;
   end;
 
 implementation

@@ -6,7 +6,6 @@ uses
   System.Generics.Collections,
   XData.Service.Common,
   //Bcl.Types.Assignable,
-  XData.Json.Serializer,
   Produtos.DTO;
 
 type
@@ -14,11 +13,10 @@ type
   public
     //Id: Assignable<Integer>;
     //Nome: Assignable<string>;
-    //NumItem: Assignable<Integer>;
+    //Registro: Assignable<Integer>;
     Id: Integer;
     Nome: string;
-    [JSONName('num_item')]
-    NumItem: Integer;
+    Registro: Integer;
   end;
 
   [ServiceContract]

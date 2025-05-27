@@ -48,7 +48,7 @@ type
     AureliusDataset1Id: TIntegerField;
     AureliusDataset1Estoque: TFloatField;
     AureliusDataset1Preco: TFloatField;
-    AureliusDataset1num_item: TIntegerField;
+    AureliusDataset1Registro: TIntegerField;
     procedure edtBuscarChange(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure btnFecharClick(Sender: TObject);
@@ -140,7 +140,7 @@ begin
     case rdGroupFiltros.ItemIndex of
       0: LFiltros.Id := StrToIntDef(edtBuscar.Text, 0);
       1: LFiltros.Nome := edtBuscar.Text;
-      2: LFiltros.NumItem := StrToIntDef(edtBuscar.Text, 0);
+      2: LFiltros.Registro := StrToIntDef(edtBuscar.Text, 0);
     end;
 
     FList := LProdutosService.List(LFiltros);

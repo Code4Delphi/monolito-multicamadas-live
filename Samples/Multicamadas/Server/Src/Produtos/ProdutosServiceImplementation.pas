@@ -5,6 +5,7 @@ interface
 uses
   System.SysUtils,
   System.Generics.Collections,
+  FireDac.Stan.Param,
   Data.DB,
   XData.Server.Module,
   XData.Service.Common,
@@ -59,7 +60,7 @@ begin
   Result.Nome := FDm.QListarnome.AsString;
   Result.Estoque := FDm.QListarestoque.AsFloat;
   Result.Preco := FDm.QListarpreco.AsFloat;
-  Result.num_item := FDm.QListarnum_item.AsInteger;
+  Result.Registro := FDm.QListarRegistro.AsInteger;
 end;
 
 function TProdutosService.List([FromQuery] Filtros: TProdutoFiltros): TList<TProduto>;
@@ -81,10 +82,10 @@ begin
     FDm.QListar.ParamByName('Nome').AsString := '%' + Filtros.Nome + '%';
   end;
 
-  if Filtros.NumItem > 0 then
+  if Filtros.Registro > 0 then
   begin
-    FDm.QListar.SQL.Add('and produtos.num_item like :NumItem');
-    FDm.QListar.ParamByName('NumItem').AsString := '%' + Filtros.NumItem.ToString + '%';
+    FDm.QListar.SQL.Add('and produtos.Registro like :Registro');
+    FDm.QListar.ParamByName('Registro').AsString := '%' + Filtros.Registro.ToString + '%';
   end;
 
   FDm.QListar.Open;
@@ -100,7 +101,7 @@ begin
     LProduto.Nome := FDm.QListarnome.AsString;
     LProduto.Estoque := FDm.QListarestoque.AsFloat;
     LProduto.Preco := FDm.QListarpreco.AsFloat;
-    LProduto.NumItem := FDm.QListarnum_item.AsInteger;
+    LProduto.Registro := FDm.QListarRegistro.AsInteger;
     Result.Add(LProduto);
 
     FDm.QListar.Next;
@@ -115,7 +116,7 @@ begin
   FDm.QCadastrarnome.AsString := Produto.Nome;
   FDm.QCadastrarestoque.AsFloat := Produto.Estoque;
   FDm.QCadastrarpreco.AsFloat := Produto.Preco;
-  FDm.QCadastrarnum_item.AsInteger := Produto.NumItem;
+  FDm.QCadastrarRegistro.AsInteger := Produto.Registro;
   FDm.QCadastrar.Post;
 
   Result := FDm.QCadastrarid.AsInteger;
@@ -132,7 +133,7 @@ begin
   FDm.QCadastrarnome.AsString := Produto.Nome;
   FDm.QCadastrarestoque.AsFloat := Produto.Estoque;
   FDm.QCadastrarpreco.AsFloat := Produto.Preco;
-  FDm.QCadastrarnum_item.AsFloat := Produto.NumItem;
+  FDm.QCadastrarRegistro.AsFloat := Produto.Registro;
   FDm.QCadastrar.Post;
 end;
 
