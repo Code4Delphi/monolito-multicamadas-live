@@ -8,7 +8,8 @@ uses
   XData.Server.Module,
   XData.Service.Common,
   ProdutosService,
-  Produtos.DM;
+  Produtos.DM,
+  Produtos.DTO;
 
 type
   [ServiceImplementation]
