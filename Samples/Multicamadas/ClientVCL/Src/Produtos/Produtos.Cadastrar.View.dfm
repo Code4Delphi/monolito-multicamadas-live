@@ -12,7 +12,6 @@ object ProdutosCadastrarView: TProdutosCadastrarView
   Font.Style = []
   KeyPreview = True
   Position = poScreenCenter
-  OnClose = FormClose
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnKeyDown = FormKeyDown
@@ -234,8 +233,8 @@ object ProdutosCadastrarView: TProdutosCadastrarView
       ParentFont = False
     end
     object edtCodigo: TDBEdit
-      Left = 24
-      Top = 43
+      Left = 21
+      Top = 46
       Width = 60
       Height = 23
       Color = clBtnFace
@@ -282,31 +281,33 @@ object ProdutosCadastrarView: TProdutosCadastrarView
     end
   end
   object DataSource1: TDataSource
-    DataSet = AureliusDataset1
+    DataSet = Dataset1
     Left = 544
     Top = 88
   end
-  object AureliusDataset1: TAureliusDataset
+  object Dataset1: TAureliusDataset
     FieldDefs = <>
+    OnObjectInsert = Dataset1ObjectInsert
+    OnObjectUpdate = Dataset1ObjectUpdate
     Left = 544
     Top = 24
-    object AureliusDataset1Id: TIntegerField
+    object Dataset1Id: TIntegerField
       FieldName = 'Id'
       DisplayFormat = '000000'
     end
-    object AureliusDataset1Nome: TStringField
+    object Dataset1Nome: TStringField
       FieldName = 'Nome'
       Size = 50
     end
-    object AureliusDataset1Estoque: TFloatField
+    object Dataset1Estoque: TFloatField
       FieldName = 'Estoque'
       DisplayFormat = ',,0.00'
     end
-    object AureliusDataset1Preco: TFloatField
+    object Dataset1Preco: TFloatField
       FieldName = 'Preco'
       DisplayFormat = ',,0.00'
     end
-    object AureliusDataset1Registro: TIntegerField
+    object Dataset1Registro: TIntegerField
       FieldName = 'Registro'
     end
   end

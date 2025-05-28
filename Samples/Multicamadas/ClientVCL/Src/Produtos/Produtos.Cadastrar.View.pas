@@ -42,29 +42,30 @@ type
     DataSource1: TDataSource;
     Label6: TLabel;
     edtEstoque: TDBEdit;
-    AureliusDataset1: TAureliusDataset;
-    AureliusDataset1Id: TIntegerField;
-    AureliusDataset1Nome: TStringField;
-    AureliusDataset1Estoque: TFloatField;
-    AureliusDataset1Preco: TFloatField;
-    AureliusDataset1Registro: TIntegerField;
+    Dataset1: TAureliusDataset;
+    Dataset1Id: TIntegerField;
+    Dataset1Nome: TStringField;
+    Dataset1Estoque: TFloatField;
+    Dataset1Preco: TFloatField;
+    Dataset1Registro: TIntegerField;
     procedure btnGravarClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure btnCancelarClick(Sender: TObject);
-    procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormShow(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormKeyPress(Sender: TObject; var Key: Char);
     procedure FormDestroy(Sender: TObject);
+    procedure Dataset1ObjectUpdate(Dataset: TDataSet; AObject: TObject);
+    procedure Dataset1ObjectInsert(Dataset: TDataSet; AObject: TObject);
   private
     FIdAlterar: Integer;
     FIdSelecionado: Integer;
     FXDataClient: TXDataClient;
+    //FProdutosService: IProdutosService;
     FProduto: TProduto;
   public
     property IdAlterar: Integer write FIdAlterar;
     property IdSelecionado: Integer read FIdSelecionado;
-    property Produto: TProduto write FProduto;
   end;
 
 implementation
@@ -77,31 +78,47 @@ begin
   FIdSelecionado := 0;
   FXDataClient := TXDataClient.Create;
   FXDataClient.Uri := 'http://localhost:2001/tms/xdata/';
+  //FProdutosService := FXDataClient.Service<IProdutosService>;
 end;
+
 procedure TProdutosCadastrarView.FormDestroy(Sender: TObject);
 begin
-  FXDataClient.Free;
+  if Assigned(FProduto) then
+    FProduto.Free;
+//  FXDataClient.Free;
 end;
 
 procedure TProdutosCadastrarView.FormShow(Sender: TObject);
 var
-  LProdutosService: IProdutosService;
+  FProdutosService: IProdutosService;
 begin
-  LProdutosService := FXDataClient.Service<IProdutosService>;
-  LProdutosService.Get(FIdAlterar);
-
-  AureliusDataset1.Close;
-  if ProdutosDM.QCadastrar.IsEmpty then
-    ProdutosDM.QCadastrar.Append
+  Dataset1.Close;
+  FProduto := TProduto.Create;
+  if FIdAlterar > 0 then
+  begin
+    FProdutosService := FXDataClient.Service<IProdutosService>;
+    FreeAndNil(FProduto);
+    FProduto := FProdutosService.Get(FIdAlterar);
+    if FProduto.Id <= 0 then
+    begin
+      ShowMessage('Dados do produto não puderam ser buscado');
+      Self.Close;
+    end;
+  end
   else
-    ProdutosDM.QCadastrar.Edit;
+  begin
+
+  end;
+
+  Dataset1.SetSourceObject(FProduto);
+  Dataset1.Open;
+
+  if FIdAlterar > 0 then
+    Dataset1.Edit
+  else
+    Dataset1.Append;
 
   edtNome.SetFocus;
-end;
-
-procedure TProdutosCadastrarView.FormClose(Sender: TObject; var Action: TCloseAction);
-begin
-  //ProdutosDM.QCadastrar.Close;
 end;
 
 procedure TProdutosCadastrarView.FormKeyPress(Sender: TObject; var Key: Char);
@@ -136,28 +153,42 @@ end;
 
 procedure TProdutosCadastrarView.btnGravarClick(Sender: TObject);
 begin
-//  if ProdutosDm.QCadastrarnome.AsString.Trim.IsEmpty then
-//    raise Exception.Create('Informe o nome do produto');
-//
-//  if ProdutosDm.QCadastrarestoque.AsFloat <= 0 then
-//    raise Exception.Create('Informe o estoque');
-//
-//  if ProdutosDm.QCadastrarpreco.AsFloat <= 0 then
-//    raise Exception.Create('Informe o preço');
-//
-//  ProdutosDM.QCadastrar.Post;
-//
-//  FIdSelecionado := ProdutosDM.QCadastrarId.AsInteger;
-//  Self.Close;
-//  Self.ModalResult := mrOk;
+  if Dataset1Nome.AsString.Trim.IsEmpty then
+    raise Exception.Create('Informe o nome do produto');
+
+  if Dataset1estoque.AsFloat <= 0 then
+    raise Exception.Create('Informe o estoque');
+
+  if Dataset1preco.AsFloat <= 0 then
+    raise Exception.Create('Informe o preço');
+
+  Dataset1.Post;
+
+  FIdSelecionado := Dataset1Id.AsInteger;
+  Self.Close;
+  Self.ModalResult := mrOk;
 end;
 
 procedure TProdutosCadastrarView.btnCancelarClick(Sender: TObject);
 begin
-//  ProdutosDM.QCadastrar.Cancel;
-//
-//  Self.Close;
-//  Self.ModalResult := mrCancel;
+  Self.Close;
+  Self.ModalResult := mrCancel;
+end;
+
+procedure TProdutosCadastrarView.Dataset1ObjectInsert(Dataset: TDataSet; AObject: TObject);
+var
+  FProdutosService: IProdutosService;
+begin
+  FProdutosService := FXDataClient.Service<IProdutosService>;
+  FProdutosService.Post(TProduto(AObject));
+end;
+
+procedure TProdutosCadastrarView.Dataset1ObjectUpdate(Dataset: TDataSet; AObject: TObject);
+var
+  FProdutosService: IProdutosService;
+begin
+  FProdutosService := FXDataClient.Service<IProdutosService>;
+  FProdutosService.Alterar(TProduto(AObject).Id, TProduto(AObject));
 end;
 
 end.

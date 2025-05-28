@@ -539,32 +539,32 @@ object ProdutosBuscarView: TProdutosBuscarView
     end
   end
   object DataSource1: TDataSource
-    DataSet = AureliusDataset1
+    DataSet = Dataset1
     Left = 136
     Top = 265
   end
-  object AureliusDataset1: TAureliusDataset
+  object Dataset1: TAureliusDataset
     FieldDefs = <>
-    OnObjectRemove = AureliusDataset1ObjectRemove
+    OnObjectRemove = Dataset1ObjectRemove
     Left = 136
     Top = 208
-    object AureliusDataset1Id: TIntegerField
+    object Dataset1Id: TIntegerField
       FieldName = 'Id'
       DisplayFormat = '000000'
     end
-    object AureliusDataset1Nome: TStringField
+    object Dataset1Nome: TStringField
       FieldName = 'Nome'
       Size = 50
     end
-    object AureliusDataset1Estoque: TFloatField
+    object Dataset1Estoque: TFloatField
       FieldName = 'Estoque'
       DisplayFormat = ',,0.00'
     end
-    object AureliusDataset1Preco: TFloatField
+    object Dataset1Preco: TFloatField
       FieldName = 'Preco'
       DisplayFormat = ',,0.00'
     end
-    object AureliusDataset1Registro: TIntegerField
+    object Dataset1Registro: TIntegerField
       FieldName = 'Registro'
     end
   end

@@ -23,7 +23,8 @@ uses
   Aurelius.Bind.BaseDataset,
   Aurelius.Bind.Dataset,
   Produtos.DTO,
-  ProdutosService;
+  ProdutosService,
+  Produtos.Cadastrar.View;
 
 type
   TProdutosBuscarView = class(TForm)
@@ -41,14 +42,14 @@ type
     DBGrid1: TDBGrid;
     DataSource1: TDataSource;
     Label2: TLabel;
-    AureliusDataset1: TAureliusDataset;
+    Dataset1: TAureliusDataset;
     btnAtualizar: TBitBtn;
     btnExcluir: TBitBtn;
-    AureliusDataset1Nome: TStringField;
-    AureliusDataset1Id: TIntegerField;
-    AureliusDataset1Estoque: TFloatField;
-    AureliusDataset1Preco: TFloatField;
-    AureliusDataset1Registro: TIntegerField;
+    Dataset1Nome: TStringField;
+    Dataset1Id: TIntegerField;
+    Dataset1Estoque: TFloatField;
+    Dataset1Preco: TFloatField;
+    Dataset1Registro: TIntegerField;
     BitBtn1: TBitBtn;
     procedure edtBuscarChange(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -61,7 +62,7 @@ type
     procedure btnAtualizarClick(Sender: TObject);
     procedure DBGrid1DblClick(Sender: TObject);
     procedure btnExcluirClick(Sender: TObject);
-    procedure AureliusDataset1ObjectRemove(Dataset: TDataSet; AObject: TObject);
+    procedure Dataset1ObjectRemove(Dataset: TDataSet; AObject: TObject);
   private
     FXDataClient: TXDataClient;
     FList: TList<TProduto>;
@@ -134,7 +135,7 @@ var
   LProdutosService: IProdutosService;
   LFiltros: TProdutoFiltros;
 begin
-  AureliusDataset1.Close;
+  Dataset1.Close;
   LProdutosService := FXDataClient.Service<IProdutosService>;
   FreeAndNil(FList);
 
@@ -151,8 +152,8 @@ begin
     LFiltros.Free;
   end;
 
-  AureliusDataset1.SetSourceList(FList);
-  AureliusDataset1.Open;
+  Dataset1.SetSourceList(FList);
+  Dataset1.Open;
 
   lbTotal.Caption := FormatFloat('000000', DataSource1.DataSet.RecordCount);
 end;
@@ -170,16 +171,16 @@ end;
 
 procedure TProdutosBuscarView.btnExcluirClick(Sender: TObject);
 begin
-  if AureliusDataset1.IsEmpty then
+  if Dataset1.IsEmpty then
     raise Exception.Create('Selecione um registro para continuar');
 
   if MessageDlg('Deseja realmente excluir este registro?', mtConfirmation, [mbYes, mbNo], 0) <> mrYes then
     Exit;
 
-  AureliusDataset1.Delete;
+  Dataset1.Delete;
 end;
 
-procedure TProdutosBuscarView.AureliusDataset1ObjectRemove(Dataset: TDataSet; AObject: TObject);
+procedure TProdutosBuscarView.Dataset1ObjectRemove(Dataset: TDataSet; AObject: TObject);
 var
   LProdutosService: IProdutosService;
 begin
@@ -194,25 +195,27 @@ end;
 
 procedure TProdutosBuscarView.btnAlterarClick(Sender: TObject);
 begin
-  if AureliusDataset1.IsEmpty then
+  if Dataset1.IsEmpty then
     raise Exception.Create('Selecione um registro para continuar');
 
-  Self.ChamarTelaCadastrar(AureliusDataset1Id.AsInteger);
+  Self.ChamarTelaCadastrar(Dataset1Id.AsInteger);
 end;
 
 procedure TProdutosBuscarView.ChamarTelaCadastrar(const AId: Integer = 0);
+var
+  LView: TProdutosCadastrarView;
 begin
-//  var LView := TProdutosCadastrarView.Create(nil);
-//  try
-//    LView.IdAlterar := AId;
-//    if LView.ShowModal <> mrOk then
-//      Exit;
-//
-//    Self.ListarDados;
-//    ProdutosDm.QListar.Locate('id', LView.IdSelecionado, [loCaseInsensitive]);
-//  finally
-//    LView.Free;
-//  end;
+  LView := TProdutosCadastrarView.Create(nil);
+  try
+    LView.IdAlterar := AId;
+    if LView.ShowModal <> mrOk then
+      Exit;
+
+    Self.ListarDados;
+    DataSet1.Locate('id', LView.IdSelecionado, [loCaseInsensitive]);
+  finally
+    LView.Free;
+  end;
 end;
 
 end.
