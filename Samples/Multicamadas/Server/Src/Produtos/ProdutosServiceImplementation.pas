@@ -18,6 +18,7 @@ type
   TProdutosService = class(TInterfacedObject, IProdutosService)
   private
     FDm: TProdutosDM;
+    FList: TList<TProduto>;
     function GetEstoque(id: Integer): Double;
     function Get(Id: Integer): TProduto;
     function List([FromQuery] Filtros: TProdutoFiltros): TList<TProduto>;
@@ -64,9 +65,9 @@ begin
 end;
 
 function TProdutosService.List([FromQuery] Filtros: TProdutoFiltros): TList<TProduto>;
+var
+  LProduto: TProduto;
 begin
-  Result := TList<TProduto>.Create;
-
   FDm.QListar.Close;
   FDm.QListar.SQL.Add('where 1 = 1');
 
@@ -93,19 +94,24 @@ begin
   if FDm.QListar.IsEmpty then
     Exit(nil);
 
+  FreeAndNil(FList);
+  FList := TList<TProduto>.Create;
+
   FDm.QListar.First;
   while not FDm.QListar.Eof do
   begin
-    var LProduto := TProduto.Create;
+    LProduto := TProduto.Create;
     LProduto.Id := FDm.QListarid.AsInteger;
     LProduto.Nome := FDm.QListarnome.AsString;
     LProduto.Estoque := FDm.QListarestoque.AsFloat;
     LProduto.Preco := FDm.QListarpreco.AsFloat;
     LProduto.Registro := FDm.QListarRegistro.AsInteger;
-    Result.Add(LProduto);
+    FList.Add(LProduto);
 
     FDm.QListar.Next;
   end;
+
+  Result := FList;
 end;
 
 function TProdutosService.Post(Produto: TProduto): Integer;

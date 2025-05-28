@@ -57,7 +57,7 @@ object ProdutosBuscarView: TProdutosBuscarView
       AlignWithMargins = True
       Left = 1
       Top = 1
-      Width = 384
+      Width = 344
       Height = 48
       Margins.Left = 0
       Margins.Top = 0
@@ -144,7 +144,6 @@ object ProdutosBuscarView: TProdutosBuscarView
         00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF}
       TabOrder = 1
       OnClick = btnCadastrarClick
-      ExplicitLeft = 661
     end
     object btnFechar: TBitBtn
       AlignWithMargins = True
@@ -281,7 +280,6 @@ object ProdutosBuscarView: TProdutosBuscarView
         FA040404040404040404040404040404040404040404F8FC0404}
       TabOrder = 3
       OnClick = btnAlterarClick
-      ExplicitTop = 10
     end
     object btnAtualizar: TBitBtn
       AlignWithMargins = True
@@ -354,7 +352,6 @@ object ProdutosBuscarView: TProdutosBuscarView
         8176B88285FF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF}
       TabOrder = 4
       OnClick = btnAtualizarClick
-      ExplicitTop = 6
     end
     object btnExcluir: TBitBtn
       AlignWithMargins = True
@@ -422,8 +419,15 @@ object ProdutosBuscarView: TProdutosBuscarView
         3A33392E30302D19170000001E1C1C1C1C1D1D1C1C1E201C1E1E1E201C1C1719
         0000000000000000000000000000000000000000000000000000}
       TabOrder = 5
-      ExplicitLeft = 699
-      ExplicitTop = 10
+      OnClick = btnExcluirClick
+    end
+    object BitBtn1: TBitBtn
+      Left = 363
+      Top = 6
+      Width = 75
+      Height = 25
+      Caption = 'BitBtn1'
+      TabOrder = 6
     end
   end
   object pnTotal: TPanel
@@ -541,6 +545,7 @@ object ProdutosBuscarView: TProdutosBuscarView
   end
   object AureliusDataset1: TAureliusDataset
     FieldDefs = <>
+    OnObjectRemove = AureliusDataset1ObjectRemove
     Left = 136
     Top = 208
     object AureliusDataset1Id: TIntegerField

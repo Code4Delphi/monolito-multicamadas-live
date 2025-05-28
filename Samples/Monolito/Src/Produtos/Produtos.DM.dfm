@@ -39,9 +39,9 @@ object ProdutosDM: TProdutosDM
       Origin = 'preco'
       DisplayFormat = ',,0.00'
     end
-    object QCadastrarnum_item: TIntegerField
-      FieldName = 'num_item'
-      Origin = 'num_item'
+    object QCadastrarregistro: TIntegerField
+      FieldName = 'registro'
+      Origin = 'registro'
     end
   end
   object QListar: TFDQuery
@@ -72,9 +72,9 @@ object ProdutosDM: TProdutosDM
       Origin = 'preco'
       DisplayFormat = ',,0.00'
     end
-    object QListarnum_item: TIntegerField
-      FieldName = 'num_item'
-      Origin = 'num_item'
+    object QListarregistro: TIntegerField
+      FieldName = 'registro'
+      Origin = 'registro'
     end
   end
 end

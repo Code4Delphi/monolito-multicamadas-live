@@ -95,8 +95,6 @@ object ProdutosCadastrarView: TProdutosCadastrarView
         00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF}
       TabOrder = 0
       OnClick = btnGravarClick
-      ExplicitLeft = 408
-      ExplicitTop = 6
     end
     object btnCancelar: TBitBtn
       Left = 544
@@ -198,16 +196,8 @@ object ProdutosCadastrarView: TProdutosCadastrarView
       Font.Style = [fsBold]
       ParentFont = False
     end
-    object Label3: TLabel
-      Left = 24
-      Top = 80
-      Width = 51
-      Height = 15
-      Caption = 'Descri'#231#227'o'
-      FocusControl = edtDescricao
-    end
     object Label4: TLabel
-      Left = 460
+      Left = 179
       Top = 80
       Width = 32
       Height = 13
@@ -221,15 +211,15 @@ object ProdutosCadastrarView: TProdutosCadastrarView
       ParentFont = False
     end
     object Label5: TLabel
-      Left = 552
+      Left = 332
       Top = 80
-      Width = 60
+      Width = 43
       Height = 15
-      Caption = 'C'#243'd. grupo'
-      FocusControl = edtIdGrupo
+      Caption = 'Registro'
+      FocusControl = edtRegistro
     end
     object Label6: TLabel
-      Left = 368
+      Left = 27
       Top = 80
       Width = 45
       Height = 13
@@ -248,7 +238,7 @@ object ProdutosCadastrarView: TProdutosCadastrarView
       Width = 60
       Height = 23
       Color = clBtnFace
-      DataField = 'id'
+      DataField = 'Id'
       DataSource = DataSource1
       ReadOnly = True
       TabOrder = 0
@@ -258,50 +248,65 @@ object ProdutosCadastrarView: TProdutosCadastrarView
       Top = 43
       Width = 555
       Height = 23
-      DataField = 'nome'
+      DataField = 'Nome'
       DataSource = DataSource1
       TabOrder = 1
     end
-    object edtDescricao: TDBEdit
-      Left = 21
-      Top = 98
-      Width = 345
-      Height = 23
-      DataField = 'descricao'
-      DataSource = DataSource1
-      TabOrder = 2
-    end
     object edtPreco: TDBEdit
-      Left = 460
+      Left = 179
       Top = 98
-      Width = 90
+      Width = 150
       Height = 23
-      DataField = 'preco'
-      DataSource = DataSource1
-      TabOrder = 4
-    end
-    object edtIdGrupo: TDBEdit
-      Left = 552
-      Top = 98
-      Width = 90
-      Height = 23
-      DataField = 'id_grupo'
-      DataSource = DataSource1
-      TabOrder = 5
-    end
-    object edtEstoque: TDBEdit
-      Left = 368
-      Top = 98
-      Width = 90
-      Height = 23
-      DataField = 'estoque'
+      DataField = 'Preco'
       DataSource = DataSource1
       TabOrder = 3
     end
+    object edtRegistro: TDBEdit
+      Left = 332
+      Top = 98
+      Width = 150
+      Height = 23
+      DataField = 'Registro'
+      DataSource = DataSource1
+      TabOrder = 4
+    end
+    object edtEstoque: TDBEdit
+      Left = 27
+      Top = 98
+      Width = 150
+      Height = 23
+      DataField = 'Estoque'
+      DataSource = DataSource1
+      TabOrder = 2
+    end
   end
   object DataSource1: TDataSource
-    DataSet = ProdutosDM.QCadastrar
-    Left = 296
-    Top = 8
+    DataSet = AureliusDataset1
+    Left = 544
+    Top = 88
+  end
+  object AureliusDataset1: TAureliusDataset
+    FieldDefs = <>
+    Left = 544
+    Top = 24
+    object AureliusDataset1Id: TIntegerField
+      FieldName = 'Id'
+      DisplayFormat = '000000'
+    end
+    object AureliusDataset1Nome: TStringField
+      FieldName = 'Nome'
+      Size = 50
+    end
+    object AureliusDataset1Estoque: TFloatField
+      FieldName = 'Estoque'
+      DisplayFormat = ',,0.00'
+    end
+    object AureliusDataset1Preco: TFloatField
+      FieldName = 'Preco'
+      DisplayFormat = ',,0.00'
+    end
+    object AureliusDataset1Registro: TIntegerField
+      FieldName = 'Registro'
+    end
   end
 end

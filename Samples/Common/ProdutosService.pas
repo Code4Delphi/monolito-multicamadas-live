@@ -5,15 +5,11 @@ interface
 uses
   System.Generics.Collections,
   XData.Service.Common,
-  //Bcl.Types.Assignable,
   Produtos.DTO;
 
 type
   TProdutoFiltros = class
   public
-    //Id: Assignable<Integer>;
-    //Nome: Assignable<string>;
-    //Registro: Assignable<Integer>;
     Id: Integer;
     Nome: string;
     Registro: Integer;

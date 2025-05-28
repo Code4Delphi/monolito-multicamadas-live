@@ -31,8 +31,8 @@ type
     QListarnome: TWideStringField;
     QListarestoque: TFloatField;
     QListarpreco: TFloatField;
-    QCadastrarnum_item: TIntegerField;
-    QListarnum_item: TIntegerField;
+    QCadastrarregistro: TIntegerField;
+    QListarregistro: TIntegerField;
   private
   public
     procedure Get(const AId: Integer);

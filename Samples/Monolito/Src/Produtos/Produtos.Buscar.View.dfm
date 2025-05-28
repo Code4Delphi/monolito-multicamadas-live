@@ -70,7 +70,7 @@ object ProdutosBuscarView: TProdutosBuscarView
       Items.Strings = (
         'C'#243'digo - F1'
         'Nome - F2'
-        'Pre'#231'o - F3')
+        'Registro - F3')
       TabOrder = 0
     end
     object btnCadastrar: TBitBtn
@@ -144,7 +144,6 @@ object ProdutosBuscarView: TProdutosBuscarView
         00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF}
       TabOrder = 1
       OnClick = btnCadastrarClick
-      ExplicitTop = 10
     end
     object btnFechar: TBitBtn
       AlignWithMargins = True
@@ -281,8 +280,6 @@ object ProdutosBuscarView: TProdutosBuscarView
         FA040404040404040404040404040404040404040404F8FC0404}
       TabOrder = 2
       OnClick = btnAlterarClick
-      ExplicitLeft = 762
-      ExplicitTop = 6
     end
     object btnExcluir: TBitBtn
       AlignWithMargins = True
@@ -351,8 +348,6 @@ object ProdutosBuscarView: TProdutosBuscarView
         0000000000000000000000000000000000000000000000000000}
       TabOrder = 3
       OnClick = btnExcluirClick
-      ExplicitLeft = 762
-      ExplicitTop = 6
     end
     object btnAtualizar: TBitBtn
       AlignWithMargins = True
@@ -530,9 +525,9 @@ object ProdutosBuscarView: TProdutosBuscarView
         end
         item
           Expanded = False
-          FieldName = 'num_item'
+          FieldName = 'registro'
           Title.Alignment = taCenter
-          Title.Caption = 'N'#186' item'
+          Title.Caption = 'Registro'
           Width = 98
           Visible = True
         end>

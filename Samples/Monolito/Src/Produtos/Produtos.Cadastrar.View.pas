@@ -34,7 +34,7 @@ type
     edtNome: TDBEdit;
     edtPreco: TDBEdit;
     Label5: TLabel;
-    edtIdGrupo: TDBEdit;
+    edtRegistro: TDBEdit;
     DataSource1: TDataSource;
     Label6: TLabel;
     edtEstoque: TDBEdit;

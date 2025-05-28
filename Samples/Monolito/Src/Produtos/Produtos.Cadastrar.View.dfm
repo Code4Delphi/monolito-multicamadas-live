@@ -167,7 +167,6 @@ object ProdutosCadastrarView: TProdutosCadastrarView
     Height = 155
     Align = alClient
     TabOrder = 1
-    ExplicitTop = -3
     object Label1: TLabel
       Left = 24
       Top = 27
@@ -213,10 +212,10 @@ object ProdutosCadastrarView: TProdutosCadastrarView
     object Label5: TLabel
       Left = 332
       Top = 80
-      Width = 41
+      Width = 43
       Height = 15
-      Caption = 'N'#186' item'
-      FocusControl = edtIdGrupo
+      Caption = 'Registro'
+      FocusControl = edtRegistro
     end
     object Label6: TLabel
       Left = 27
@@ -261,12 +260,12 @@ object ProdutosCadastrarView: TProdutosCadastrarView
       DataSource = DataSource1
       TabOrder = 3
     end
-    object edtIdGrupo: TDBEdit
+    object edtRegistro: TDBEdit
       Left = 332
       Top = 98
       Width = 150
       Height = 23
-      DataField = 'num_item'
+      DataField = 'registro'
       DataSource = DataSource1
       TabOrder = 4
     end

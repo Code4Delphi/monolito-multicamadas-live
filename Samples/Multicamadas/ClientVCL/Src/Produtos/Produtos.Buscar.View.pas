@@ -49,6 +49,7 @@ type
     AureliusDataset1Estoque: TFloatField;
     AureliusDataset1Preco: TFloatField;
     AureliusDataset1Registro: TIntegerField;
+    BitBtn1: TBitBtn;
     procedure edtBuscarChange(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure btnFecharClick(Sender: TObject);
@@ -59,6 +60,8 @@ type
     procedure FormDestroy(Sender: TObject);
     procedure btnAtualizarClick(Sender: TObject);
     procedure DBGrid1DblClick(Sender: TObject);
+    procedure btnExcluirClick(Sender: TObject);
+    procedure AureliusDataset1ObjectRemove(Dataset: TDataSet; AObject: TObject);
   private
     FXDataClient: TXDataClient;
     FList: TList<TProduto>;
@@ -165,6 +168,25 @@ begin
     Key := 0;
 end;
 
+procedure TProdutosBuscarView.btnExcluirClick(Sender: TObject);
+begin
+  if AureliusDataset1.IsEmpty then
+    raise Exception.Create('Selecione um registro para continuar');
+
+  if MessageDlg('Deseja realmente excluir este registro?', mtConfirmation, [mbYes, mbNo], 0) <> mrYes then
+    Exit;
+
+  AureliusDataset1.Delete;
+end;
+
+procedure TProdutosBuscarView.AureliusDataset1ObjectRemove(Dataset: TDataSet; AObject: TObject);
+var
+  LProdutosService: IProdutosService;
+begin
+  LProdutosService := FXDataClient.Service<IProdutosService>;
+  LProdutosService.Delete(TProduto(AObject).Id);
+end;
+
 procedure TProdutosBuscarView.btnCadastrarClick(Sender: TObject);
 begin
   Self.ChamarTelaCadastrar;
@@ -172,10 +194,10 @@ end;
 
 procedure TProdutosBuscarView.btnAlterarClick(Sender: TObject);
 begin
-//  if ProdutosDm.QListar.IsEmpty then
-//    raise Exception.Create('Selecione um registro para continuar');
-//
-//  Self.ChamarTelaCadastrar(ProdutosDm.QListarId.AsInteger);
+  if AureliusDataset1.IsEmpty then
+    raise Exception.Create('Selecione um registro para continuar');
+
+  Self.ChamarTelaCadastrar(AureliusDataset1Id.AsInteger);
 end;
 
 procedure TProdutosBuscarView.ChamarTelaCadastrar(const AId: Integer = 0);

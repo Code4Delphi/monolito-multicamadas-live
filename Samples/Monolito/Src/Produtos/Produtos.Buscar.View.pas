@@ -8,6 +8,7 @@ uses
   System.SysUtils,
   System.Variants,
   System.Classes,
+  System.UITypes,
   Vcl.Graphics,
   Vcl.Controls,
   Vcl.Forms,
@@ -121,7 +122,7 @@ begin
   case rdGroupFiltros.ItemIndex of
     0: LCondicao := 'where id like ' + LStrBuscar;
     1: LCondicao := 'where nome like ' + LStrBuscar;
-    2: LCondicao := 'where preco like ' + LStrBuscar;
+    2: LCondicao := 'where registro like ' + LStrBuscar;
   end;
 
   ProdutosDM.List(LCondicao);

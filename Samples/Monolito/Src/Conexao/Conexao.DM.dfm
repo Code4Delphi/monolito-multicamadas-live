@@ -1,7 +1,7 @@
 object ConexaoDM: TConexaoDM
   OnCreate = DataModuleCreate
-  Height = 435
-  Width = 385
+  Height = 381
+  Width = 310
   object FDGUIxWaitCursor1: TFDGUIxWaitCursor
     Provider = 'Forms'
     Left = 136

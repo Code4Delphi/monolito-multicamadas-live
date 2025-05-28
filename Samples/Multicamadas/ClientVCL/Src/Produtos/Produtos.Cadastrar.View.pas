@@ -18,7 +18,10 @@ uses
   Vcl.ExtCtrls,
   Vcl.DBCtrls,
   Vcl.Buttons,
-  Data.DB;
+  Data.DB,
+  Aurelius.Bind.BaseDataset,
+  Aurelius.Bind.Dataset,
+  ProdutosService;
 
 type
   TProdutosCadastrarView = class(TForm)
@@ -28,17 +31,21 @@ type
     pnDados: TPanel;
     Label1: TLabel;
     Label2: TLabel;
-    Label3: TLabel;
     Label4: TLabel;
     edtCodigo: TDBEdit;
     edtNome: TDBEdit;
-    edtDescricao: TDBEdit;
     edtPreco: TDBEdit;
     Label5: TLabel;
-    edtIdGrupo: TDBEdit;
+    edtRegistro: TDBEdit;
     DataSource1: TDataSource;
     Label6: TLabel;
     edtEstoque: TDBEdit;
+    AureliusDataset1: TAureliusDataset;
+    AureliusDataset1Id: TIntegerField;
+    AureliusDataset1Nome: TStringField;
+    AureliusDataset1Estoque: TFloatField;
+    AureliusDataset1Preco: TFloatField;
+    AureliusDataset1Registro: TIntegerField;
     procedure btnGravarClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure btnCancelarClick(Sender: TObject);
@@ -65,7 +72,10 @@ begin
 end;
 
 procedure TProdutosCadastrarView.FormShow(Sender: TObject);
+var
+  LProdutosService: IProdutosService;
 begin
+  AureliusDataset1.Close;
   ProdutosDM.Get(FIdAlterar);
   if ProdutosDM.QCadastrar.IsEmpty then
     ProdutosDM.QCadastrar.Append
@@ -77,7 +87,7 @@ end;
 
 procedure TProdutosCadastrarView.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
-  ProdutosDM.QCadastrar.Close;
+  //ProdutosDM.QCadastrar.Close;
 end;
 
 procedure TProdutosCadastrarView.FormKeyPress(Sender: TObject; var Key: Char);
@@ -112,28 +122,28 @@ end;
 
 procedure TProdutosCadastrarView.btnGravarClick(Sender: TObject);
 begin
-  if ProdutosDm.QCadastrarnome.AsString.Trim.IsEmpty then
-    raise Exception.Create('Informe o nome do produto');
-
-  if ProdutosDm.QCadastrarestoque.AsFloat <= 0 then
-    raise Exception.Create('Informe o estoque');
-
-  if ProdutosDm.QCadastrarpreco.AsFloat <= 0 then
-    raise Exception.Create('Informe o preço');
-
-  ProdutosDM.QCadastrar.Post;
-
-  FIdSelecionado := ProdutosDM.QCadastrarId.AsInteger;
-  Self.Close;
-  Self.ModalResult := mrOk;
+//  if ProdutosDm.QCadastrarnome.AsString.Trim.IsEmpty then
+//    raise Exception.Create('Informe o nome do produto');
+//
+//  if ProdutosDm.QCadastrarestoque.AsFloat <= 0 then
+//    raise Exception.Create('Informe o estoque');
+//
+//  if ProdutosDm.QCadastrarpreco.AsFloat <= 0 then
+//    raise Exception.Create('Informe o preço');
+//
+//  ProdutosDM.QCadastrar.Post;
+//
+//  FIdSelecionado := ProdutosDM.QCadastrarId.AsInteger;
+//  Self.Close;
+//  Self.ModalResult := mrOk;
 end;
 
 procedure TProdutosCadastrarView.btnCancelarClick(Sender: TObject);
 begin
-  ProdutosDM.QCadastrar.Cancel;
-
-  Self.Close;
-  Self.ModalResult := mrCancel;
+//  ProdutosDM.QCadastrar.Cancel;
+//
+//  Self.Close;
+//  Self.ModalResult := mrCancel;
 end;
 
 end.
