@@ -19,9 +19,11 @@ uses
   Vcl.DBCtrls,
   Vcl.Buttons,
   Data.DB,
+  XData.Client,
   Aurelius.Bind.BaseDataset,
   Aurelius.Bind.Dataset,
-  ProdutosService;
+  ProdutosService,
+  Produtos.DTO;
 
 type
   TProdutosCadastrarView = class(TForm)
@@ -53,12 +55,16 @@ type
     procedure FormShow(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormKeyPress(Sender: TObject; var Key: Char);
+    procedure FormDestroy(Sender: TObject);
   private
     FIdAlterar: Integer;
     FIdSelecionado: Integer;
+    FXDataClient: TXDataClient;
+    FProduto: TProduto;
   public
     property IdAlterar: Integer write FIdAlterar;
     property IdSelecionado: Integer read FIdSelecionado;
+    property Produto: TProduto write FProduto;
   end;
 
 implementation
@@ -69,14 +75,22 @@ procedure TProdutosCadastrarView.FormCreate(Sender: TObject);
 begin
   FIdAlterar := 0;
   FIdSelecionado := 0;
+  FXDataClient := TXDataClient.Create;
+  FXDataClient.Uri := 'http://localhost:2001/tms/xdata/';
+end;
+procedure TProdutosCadastrarView.FormDestroy(Sender: TObject);
+begin
+  FXDataClient.Free;
 end;
 
 procedure TProdutosCadastrarView.FormShow(Sender: TObject);
 var
   LProdutosService: IProdutosService;
 begin
+  LProdutosService := FXDataClient.Service<IProdutosService>;
+  LProdutosService.Get(FIdAlterar);
+
   AureliusDataset1.Close;
-  ProdutosDM.Get(FIdAlterar);
   if ProdutosDM.QCadastrar.IsEmpty then
     ProdutosDM.QCadastrar.Append
   else
