@@ -8,6 +8,7 @@ uses
   System.SysUtils,
   System.Variants,
   System.Classes,
+  System.UITypes,
   System.Generics.Collections,
   Vcl.Graphics,
   Vcl.Controls,
@@ -50,7 +51,6 @@ type
     Dataset1Estoque: TFloatField;
     Dataset1Preco: TFloatField;
     Dataset1Registro: TIntegerField;
-    BitBtn1: TBitBtn;
     procedure edtBuscarChange(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure btnFecharClick(Sender: TObject);
@@ -89,6 +89,7 @@ end;
 
 procedure TProdutosBuscarView.FormDestroy(Sender: TObject);
 begin
+  Dataset1.Close;
   FList.Free;
   FXDataClient.Free;
 end;
@@ -131,7 +132,6 @@ end;
 
 procedure TProdutosBuscarView.ListarDados;
 var
-  LStrBuscar: string;
   LProdutosService: IProdutosService;
   LFiltros: TProdutoFiltros;
 begin
@@ -154,6 +154,7 @@ begin
 
   Dataset1.SetSourceList(FList);
   Dataset1.Open;
+  Dataset1.Last;
 
   lbTotal.Caption := FormatFloat('000000', DataSource1.DataSet.RecordCount);
 end;
@@ -178,6 +179,7 @@ begin
     Exit;
 
   Dataset1.Delete;
+  lbTotal.Caption := FormatFloat('000000', DataSource1.DataSet.RecordCount);
 end;
 
 procedure TProdutosBuscarView.Dataset1ObjectRemove(Dataset: TDataSet; AObject: TObject);

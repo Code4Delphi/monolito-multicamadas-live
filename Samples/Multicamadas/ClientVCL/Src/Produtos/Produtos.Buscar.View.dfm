@@ -421,14 +421,6 @@ object ProdutosBuscarView: TProdutosBuscarView
       TabOrder = 5
       OnClick = btnExcluirClick
     end
-    object BitBtn1: TBitBtn
-      Left = 363
-      Top = 6
-      Width = 75
-      Height = 25
-      Caption = 'BitBtn1'
-      TabOrder = 6
-    end
   end
   object pnTotal: TPanel
     Left = 0

@@ -15,7 +15,6 @@ object ProdutosDM: TProdutosDM
     Params.Strings = (
       'Database=C:\Lives\monolito-multicamadas-live\Samples\DB\dados.db'
       'DriverID=SQLite')
-    Connected = True
     LoginPrompt = False
     Left = 136
     Top = 56

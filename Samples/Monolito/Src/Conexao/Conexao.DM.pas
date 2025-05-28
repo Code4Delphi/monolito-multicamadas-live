@@ -47,7 +47,7 @@ implementation
 procedure TConexaoDM.DataModuleCreate(Sender: TObject);
 begin
   FDConnection1.Connected := False;
-  //FDConnection1.Params.Database := '..\DB\dados.db';
+  FDConnection1.Params.Database := '..\..\DB\dados.db';
 end;
 
 end.
