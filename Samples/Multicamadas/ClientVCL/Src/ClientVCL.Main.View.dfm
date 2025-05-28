@@ -12,7 +12,6 @@ object ClientVCLMainView: TClientVCLMainView
   Font.Style = []
   Menu = MainMenu1
   WindowState = wsMaximized
-  OnCreate = FormCreate
   OnKeyDown = FormKeyDown
   TextHeight = 15
   object MainMenu1: TMainMenu

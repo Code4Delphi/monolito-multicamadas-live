@@ -14,7 +14,6 @@ type
     Produtos1: TMenuItem;
     procedure Produtos1Click(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
-    procedure FormCreate(Sender: TObject);
   private
 
   public
@@ -27,11 +26,6 @@ var
 implementation
 
 {$R *.dfm}
-
-procedure TClientVCLMainView.FormCreate(Sender: TObject);
-begin
-  ReportMemoryLeaksOnShutdown := True;
-end;
 
 procedure TClientVCLMainView.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
 begin

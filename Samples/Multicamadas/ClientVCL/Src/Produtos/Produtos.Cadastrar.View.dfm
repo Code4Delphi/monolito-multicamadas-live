@@ -95,6 +95,8 @@ object ProdutosCadastrarView: TProdutosCadastrarView
         00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FFFF00FF}
       TabOrder = 0
       OnClick = btnGravarClick
+      ExplicitLeft = 408
+      ExplicitTop = 6
     end
     object btnCancelar: TBitBtn
       Left = 544
@@ -167,7 +169,6 @@ object ProdutosCadastrarView: TProdutosCadastrarView
     Height = 155
     Align = alClient
     TabOrder = 1
-    ExplicitTop = -3
     object Label1: TLabel
       Left = 24
       Top = 27

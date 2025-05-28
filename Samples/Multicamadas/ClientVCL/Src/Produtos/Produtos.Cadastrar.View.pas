@@ -61,7 +61,6 @@ type
     FIdAlterar: Integer;
     FIdSelecionado: Integer;
     FXDataClient: TXDataClient;
-    //FProdutosService: IProdutosService;
     FProduto: TProduto;
   public
     property IdAlterar: Integer write FIdAlterar;
@@ -78,14 +77,12 @@ begin
   FIdSelecionado := 0;
   FXDataClient := TXDataClient.Create;
   FXDataClient.Uri := 'http://localhost:2001/tms/xdata/';
-  //FProdutosService := FXDataClient.Service<IProdutosService>;
 end;
 
 procedure TProdutosCadastrarView.FormDestroy(Sender: TObject);
 begin
-  if Assigned(FProduto) then
-    FProduto.Free;
-//  FXDataClient.Free;
+  Dataset1.Close;
+  FXDataClient.Free;
 end;
 
 procedure TProdutosCadastrarView.FormShow(Sender: TObject);
@@ -93,11 +90,11 @@ var
   FProdutosService: IProdutosService;
 begin
   Dataset1.Close;
-  FProduto := TProduto.Create;
+
   if FIdAlterar > 0 then
   begin
     FProdutosService := FXDataClient.Service<IProdutosService>;
-    FreeAndNil(FProduto);
+
     FProduto := FProdutosService.Get(FIdAlterar);
     if FProduto.Id <= 0 then
     begin
@@ -107,7 +104,11 @@ begin
   end
   else
   begin
-
+    FProduto := TProduto.Create;
+    FProduto.Nome := '';
+    FProduto.Estoque := 0;
+    FProduto.Preco := 0;
+    FProduto.Registro := 0;
   end;
 
   Dataset1.SetSourceObject(FProduto);
